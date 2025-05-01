@@ -1,0 +1,6 @@
+Dataset,SensitiveAttributes
+Adult,"gender, age, race"
+KDD,"gender, age, race"
+DC,"gender, age"
+MobiAct,"gender, age"
+ARS,gender
