@@ -17,7 +17,7 @@
   - `ExperimentMeasurements.csv` : Epoch-wise results for the different runs across all evaluated settings.
   - `ExperimentStatistics.csv` : Aggregated metrics and t-test results.  
 
-## 🚀 Running an Experiment
+## 🖥️ Running an Experiment
 
 ### 1. Install requirements
 ```bash
@@ -43,7 +43,7 @@ Add the config file to `Code/configs` to set the following parameters:
 - **Output Path**  
   Specify the output directory to save results.
 
-#### 🧾  Configuration Example
+#### 🧾 Configuration Example
 ```json
 {
   // Name of the dataset used
