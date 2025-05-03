@@ -1,5 +1,4 @@
-# Does Automated Data Selection Hurt Fairness and Utility of Machine Learning?
-# ELAPSE 
+# ELAPSE: A Framework to Evaluate the Impact of Data Selection on ML Model Fairness and Utility
 
 ## 🔍 Overview
 
