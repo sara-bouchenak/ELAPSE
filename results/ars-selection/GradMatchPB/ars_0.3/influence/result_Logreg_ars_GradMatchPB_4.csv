@@ -1,0 +1,5 @@
+,ratio,system,acc,time,SPD_gender,EOD_gender,AOD_gender,DI_gender,DcI_gender,F1_score,Precision,Recall
+2.05,0.05,GradMatchPB,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant
+2.1,0.1,GradMatchPB,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant
+2.2,0.2,GradMatchPB,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant
+2.3,0.3,GradMatchPB,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant
