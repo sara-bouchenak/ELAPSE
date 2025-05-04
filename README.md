@@ -7,7 +7,7 @@ It supports configurable experimentation across a variety of datasets, models, a
   <img src="./ELAPSE_pipeline.jpg" alt="Overview of ELAPSE experimentation framework" width="1000">
 </p>
 
-## In This README
+In the following, we introduce:
 
 - [ELAPSE Features](#elapse-features)  
 - [Repository Structure](#repository-structure)  
