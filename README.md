@@ -1,129 +1,203 @@
-# ELAPSE: A Framework to Evaluate the Impact of Data Selection on ML Model Fairness and Utility
+# ELAPSE
 
-## 🔍 Overview
+**ELAPSE** is a framework for evaluating the impact of data selection methods on both ML models utility and fairness. It supports configurable experimentation across a variety of datasets, models, and fairness metrics, with support for result tracing and statistical analysis.
 
-**ELAPSE** is a framework for evaluating how data selection methods affect both model utility and fairness across a wide range of settings.
+---
 
-## 📁 Repository Structure
+## Features
 
-- `datasets/` : Contains the real-world datasets used in ELAPSE.  
-- `code/` : Main codebase to run experiments.  
-  - `configs/` : Example experiment configuration files.  
-  - `cords/selectionstrategies` : Data selection methods used in ELAPSE.
-  - `cords/utils` : Auxiliary modules for model architectures and dataset loading.   
-- `results/` : Folder to store output results per configuration. 
-- `traces/` :  
-  - `DatasetProperties.csv` : Evaluated datasets and their corresponding sensitive attributes.
-  - `ExperimentConfigurations.csv` : All evaluated configurations.  
-  - `ExperimentMeasurements.csv` : Epoch-wise results for the different runs across all evaluated settings.
-  - `ExperimentStatistics.csv` : Aggregated metrics and t-test results.  
+- Evaluation of selection methods on fairness and utility metrics  
+- Built-in support for common ML models and real-world datasets  
+- Modular design for easy extension  
+- Epoch-level and aggregated result tracing  
+- Integrated t-test analysis for selection impact and variability  
 
+---
 
-## 🖥️ Running an Experiment
-
-### 1. Install requirements
+## Repository Structure
 ```bash
+├── code/
+│   ├── configs/                  # Experiment configurations
+│   ├── dataselection/           # Core modules for data selection 
+│   │   ├── selectionmethods/    # Data selection methods
+│   │   └── utils/               # Dataset loading and model utilities
+│   └── statistics/              # Trace statistics and t-test results
+├── datasets/                    # ELAPSE datasets
+├── results/                     # Output results per configuration
+├── traces/                      # Aggregated metrics and t-test results
+└── README.md
+```
+
+## Starting with ELAPSE
+
+### Software Requirements
+- Python ≥ 3.8  
+- All dependencies listed in `code/requirements.txt`
+
+### Hardware Recommendations
+Experiments can be run on CPU or GPU. A CUDA-compatible GPU is recommended for faster training when using deep models or large datasets.
+
+### Installation
+
+To install the latest ELAPSE version from source
+
+```bash
+git clone https://github.com/sara-bouchenak/ELAPSE/
+cd ELAPSE
 pip install -r requirements.txt
 ```
 
-### 2. Edit configuration
+## Running an Experiment
 
-Add the config file to `code/configs` to set the following parameters:
+1. Create a JSON configuration file in `code/configs/`.
 
-- **Dataset**  
-  Set the dataset name, its sensitive attributes and the path to the data.
+   Example configuration:
 
-- **Model and Hyperparameters**  
-  Choose the model(s) to be used and specify their hyperparameters.
+   ```json
+   {
+     // Dataset and fairness setup
+     "dataset_name": "ars",
+     "sensituve_attributes": ["gender"],
+     "columns": ["gender", "labels"],
+     "dataset_path": "../Datasets/ARS/",
+     "train_file": "train_ars.csv",
+     "test_file": "test_ars.csv",
+     "val_file": "val_ars.csv",
+     "data_load": "load-ars",
 
-- **Selection Method, Ratios, and Selection Frequency**  
-  Define the data selection method(s) and the corresponding selection ratios, and selection frequency.
+     // Training hyperparameters
+     "lr": 0.001,
+     "batch_size": 512,
+     "epoch": 400,
+     "label_num": 2,
+     "log_interval": 50,
+     "runs": 5,
 
-- **Number of Runs**  
-  Configure how many times to run the experiment.
+     // Data selection configuration
+     "fraction": 0.05,
+     "select_every": 20,
+     "ratios": [0.05, 0.1, 0.2, 0.3],
+     "values": [3],  // 0=Full, 2=GradMatch, 3=Craig, 4=Glister, 5=Random
 
-- **Output Path**  
-  Specify the output directory to save results.
+     // Models to evaluate
+     "models": ["MLP", "SVM", "Logreg"],
 
-#### 🧾 Configuration Example
-```json
-{
-  // Name of the dataset used
-  "dataset_name": "ars",
+     // Output
+     "result_path": "./results/ARS",
+     "cols": [
+       "SPD_gender", "EOD_gender", "AOD_gender",
+       "DI_gender", "DcI_gender", "F1_score",
+       "Precision", "Recall"
+     ]
+   }
 
-  // Sensitive attribute(s) used to compute fairness metrics
-  "sensituve_attributes": ["gender"],
+2. Prepare the result folder structure.
 
-  // Columns to retain (e.g., the sensitive attribute and labels)
-  "columns": ["gender", "labels"],
-
-  // Path to the folder containing the dataset files
-  "dataset_path": "../Datasets/ARS/",
-
-  // Dataset file names for training, testing, and validation
-  "train_file": "train_ars.csv",
-  "test_file": "test_ars.csv",
-  "val_file": "val_ars.csv",
-
-  // Name of the dataset loading function implemented in the code
-  "data_load": "load-ars",
-
-  // Training hyperparameters
-  "lr": 0.001,             // Learning rate
-  "batch_size": 512,       // Batch size
-  "epoch": 400,            // Number of training epochs
-  "label_num": 2,          // Number of output classes
-  "log_interval": 50,      // Frequency for logging during training
-  "runs": 5,               // Number of experiment repetitions
-
-  // Data selection parameters
-  "fraction": 0.05,        // Initial fraction of the dataset used
-  "select_every": 20,      // Frequency (in epochs) of selecting new data
-  "ratios": [0.05, 0.1, 0.2, 0.3], // Selection ratios to evaluate
-
-  // Data selection method(s) to evaluate:
-  // 0 = Full, 2 = GradMatch, 3 = Craig, 4 = Glister, 5 = Random
-  "values": [3],
-
-  // Machine learning models to train
-  "models": ["MLP", "SVM", "Logreg"],
-
-  // Output directory to save results
-  "result_path": "./results/ARS",
-
-  // Metrics to compute: fairness (w.r.t. gender) and performance
-  "cols": [
-    "SPD_gender", "EOD_gender", "AOD_gender",
-    "DI_gender", "DcI_gender", "F1_score",
-    "Precision", "Recall"
-  ]
-}
-```
-
-### 3. Prepare result folders
-Create the following structure:
-```
-<result_path>/
+```bash
+results/<result_path>/
   └── <method_name>/
-      ├── <dataset_name>_<selection_ratio>/
-      └── ...
+      └── <dataset_name>_<selection_ratio>/
 ```
 
-### 4. Run the experiment
+3. Run the experiment.
+
 ```bash
 python code/main.py --config code/configs/config.json
 ```
 
-## 📊 Statistics and Result Traces
+## Result Tracing and Statistical Analysis
 
-Results are saved in the specified `results/` folder.
+ELAPSE supports detailed trace logging and statistical analysis to evaluate the impact of data selection on model fairness and utility.
 
-To compute statistics:
+### Output Trace Files
 
-1. Run `code/selection-impact-t-test.ipynb` to apply t-tests evaluating the impact of data selection on **utility** and **fairness**.  
-2. Run `code/variability-t-test.ipynb` to apply t-tests assessing the impact of selection on **variability**.  
-3. Run `code/traces.ipynb` to generate the trace files:
-   - `ExperimentMeasurements.csv`: Epoch-wise metrics for all runs across different scenarios.  
-   - `ExperimentStatistics.csv`: Aggregated metrics and statistical test results.  
-   - `ExperimentConfigurations.csv`: All evaluated configurations in ELAPSE.  
-   - `DatasetProperties.csv`: Datasets used along with their sensitive attributes.
+- `ExperimentMeasurements.csv`: Epoch-wise metrics for each run across configurations  
+- `ExperimentStatistics.csv`: Aggregated metrics along with t-test results  
+- `ExperimentConfigurations.csv`: All evaluated configuration details  
+- `DatasetProperties.csv`: Metadata about datasets and associated sensitive attributes  
+
+### Running the Analysis
+
+Use the following notebooks to generate trace files and conduct statistical tests:
+
+```bash
+# Applies t-tests to evaluate selection impact on utility and fairness
+jupyter notebook code/statistics/selection-impact-t-test.ipynb
+
+# Applies t-tests to assess variability across experimental runs
+jupyter notebook code/statistics/variability-t-test.ipynb
+
+# Generate result trace files
+jupyter notebook code/statistics/traces.ipynb
+```
+
+## Extending the Framework and Contributing
+
+We value and encourage contributions from the research and open-source communities to improve the ELAPSE framework. ELAPSE is designed to be modular and extensible, making it easy to integrate new datasets, selection methods, or models.
+
+### How to Extend ELAPSE
+
+- **Add new datasets**:  
+  Update the dataset builder in `dataselection.utils.data.datasets` to integrate a new dataset along with its preprocessing.
+
+- **Implement new selection methods**:  
+  Extend `dataselection/selectionmethods/` with a new data selection method, and `dataselection.utils.data.dataloader` to account for it.
+
+- **Add new model architectures**:  
+  Define additional models in `dataselection.utils.models` and ensure they are compatible with the training pipeline.
+
+- **Improve metrics and trace handling**:  
+  Add new fairness/utility metrics, and enhance the statistical analysis workflow.
+
+---
+
+### Contribution Guidelines
+
+We welcome all types of contributions. Please follow these guidelines to ensure smooth collaboration:
+
+- **Report issues**:  
+  If you encounter bugs or have suggestions for improvement, open an issue on the GitHub repository. Include as much relevant detail as possible (e.g., error messages, dataset/config used, and reproduction steps).
+
+- **Propose new features**:  
+  For new features or enhancements, submit a feature request. Clearly describe the motivation, proposed functionality, and how it aligns with ELAPSE’s goals.
+
+- **Code contributions**:  
+  To contribute code:
+  1. Fork the ELAPSE repository.
+  2. Create a new branch from `main` or an appropriate development branch.
+  3. Implement your changes and ensure they are well-documented and, where applicable, tested.
+  4. Submit a pull request with a clear explanation of the changes and their purpose.
+
+- **Code style**:  
+  Follow the existing code structure and conventions used in ELAPSE. Consistency improves readability and facilitates code reviews.
+
+- **Testing**:  
+  Ensure your changes pass existing tests and, if introducing new features, provide relevant tests.
+
+For substantial changes, consider opening a discussion or draft pull request first to align with the maintainers on design choices.
+
+
+## Acknowledgments
+
+ELAPSE extends [CORDS](https://github.com/decile-team/cords) by adding support for new datasets with associated sensitive attributes, integrating additional model architectures, and computing a comprehensive set of utility and fairness metrics. We thank the open-source community for the foundational tools and contributions that supported the development of this framework.
+
+
+## Publications
+
+The following publications are related to the data selection strategies supported in ELAPSE.
+
+[1] Krishnateja Killamsetty, Durga Sivasubramanian, Ganesh Ramakrishnan, Abir De, Rishabh Iyer.  
+“GRAD-MATCH: Gradient Matching based Data Subset Selection for Efficient Deep Model Training”.  
+*Proceedings of the 38th International Conference on Machine Learning (ICML), 2021*, PMLR 139:5464–5474.
+
+[2] Krishnateja Killamsetty, Durga Sivasubramanian, Ganesh Ramakrishnan, Rishabh Iyer.  
+“GLISTER: Generalization based Data Subset Selection for Efficient and Robust Learning”.  
+*Thirty-Fifth AAAI Conference on Artificial Intelligence (AAAI), 2021*, pp. 8110–8118.
+
+[3] Baharan Mirzasoleiman, Jeff Bilmes, Jure Leskovec.  
+“Coresets for Data-efficient Training of Machine Learning Models”.  
+*International Conference on Machine Learning (ICML), 2020*.
+
+   
+
+
