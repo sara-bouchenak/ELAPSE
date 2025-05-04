@@ -137,7 +137,7 @@ ELAPSE supports detailed trace logging and statistical analysis to evaluate the 
 ### Output Trace Files
 
 - `ExperimentMeasurements.csv`: Epoch-wise metrics for each run across configurations  
-- `ExperimentStatistics.csv`: Aggregated metrics along with t-test results  
+- `ExperimentStatistics.csv`: Aggregated results and impact evaluation  
 - `ExperimentConfigurations.csv`: All evaluated configuration details  
 - `DatasetProperties.csv`: Metadata about datasets and associated sensitive attributes  
 
@@ -146,13 +146,13 @@ ELAPSE supports detailed trace logging and statistical analysis to evaluate the 
 Use the following notebooks to generate trace files and conduct statistical tests:
 
 ```bash
-# Applies t-tests to evaluate selection impact on utility and fairness
+# Applies t-tests to evaluate data selection impact on ML model utility and fairness
 jupyter notebook code/statistics/selection-impact-t-test.ipynb
 
-# Applies t-tests to assess variability across experimental runs
+# Applies t-tests to assess the variability of ML model utility and fairness
 jupyter notebook code/statistics/variability-t-test.ipynb
 
-# Generate result trace files
+# Generate experiment traces
 jupyter notebook code/statistics/traces.ipynb
 ```
 
