@@ -7,29 +7,21 @@ It supports configurable experimentation across a variety of datasets, models, a
   <img src="./ELAPSE_pipeline.jpg" alt="Overview of ELAPSE experimentation framework" width="1000">
 </p>
 
-## Table of Contents
+## In This README
 
-- [Features](#features)  
+- [ELAPSE Features](#elapse-features)  
 - [Repository Structure](#repository-structure)  
 - [Starting with ELAPSE](#starting-with-elapse)  
-  - [Software Requirements](#software-requirements)  
-  - [Hardware Recommendations](#hardware-recommendations)  
-  - [Installation](#installation)  
 - [Running an Experiment](#running-an-experiment)  
-- [Result Tracing and Statistical Analysis](#result-tracing-and-statistical-analysis)  
-  - [Output Trace Files](#output-trace-files)  
-  - [Running the Analysis](#running-the-analysis)  
-- [Extending the Framework and Contributing](#extending-the-framework-and-contributing)  
-  - [How to Extend ELAPSE](#how-to-extend-elapse)  
-  - [Contribution Guidelines](#contribution-guidelines)  
+- [Producing Traces and Statistics](#producing-traces-and-statistics)  
+- [Contributing](#contributing)  
 - [Acknowledgments](#acknowledgments)  
-- [Publications](#publications)  
-- [Contact](#contact)
+- [Publications](#publications) 
 
 ---
 
 
-## Features
+## ELAPSE Features
 
 - Evaluation of selection methods on fairness and utility metrics  
 - Built-in support for common ML models and real-world datasets  
@@ -134,7 +126,7 @@ python code/main.py --config code/configs/config.json
 
 ---
 
-## Result Tracing and Statistical Analysis
+## Producing Traces and Statistics
 
 ELAPSE supports detailed trace logging and statistical analysis to evaluate the impact of data selection on model fairness and utility.
 
@@ -162,7 +154,7 @@ jupyter notebook code/statistics/traces.ipynb
 
 ---
 
-## Extending the Framework and Contributing
+## Contributing
 
 We value and encourage contributions from the research and open-source communities to improve the ELAPSE framework. ELAPSE is designed to be modular and extensible, making it easy to integrate new datasets, selection methods, or models.
 
@@ -205,13 +197,11 @@ We welcome all types of contributions. Please follow these guidelines to ensure 
 - **Testing**:  
   Ensure your changes pass existing tests and, if introducing new features, provide relevant tests.
 
-- **Contact**: 
-[Nawel Benarba](mailto:nawel.benarba@insa-lyon.fr), 
-[Zeyang Kong](mailto:zeyang.kong@insa-lyon.fr), 
-[Sara Bouchenak](mailto:sara.bouchenak@insa-lyon.fr)
 
 
 For substantial changes, consider opening a discussion or draft pull request first to align with the maintainers on design choices.
+For any questions or follow-up, please contact the repository maintainers at [nawel.benarba@insa-lyon.fr](mailto:nawel.benarba@insa-lyon.fr), [zeyang.kong@insa-lyon.fr](mailto:zeyang.kong@insa-lyon.fr), and [sara.bouchenak@insa-lyon.fr](mailto:sara.bouchenak@insa-lyon.fr).
+
 
 ---
 
