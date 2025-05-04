@@ -1,7 +1,7 @@
 # ELAPSE
 
 **ELAPSE** is a framework for evaluating the impact of data selection methods on ML model utility and fairness.  
-It supports configurable experiments across a variety of datasets, ML models, and a wide range of ML data sélection methods, and using various fairness metrics, and utility metrics. As a result, ELAPSE produces the experiment traces and their statistical analysis.
+It supports configurable experiments across a variety of datasets and ML models, a wide range of ML data sélection methods, and measuring various fairness metrics and utility metrics. As a result, ELAPSE produces the experiment traces and their statistical analysis.
 
 <p align="center">
   <img src="./ELAPSE_pipeline.jpg" alt="Overview of ELAPSE experimentation framework" width="1000">
