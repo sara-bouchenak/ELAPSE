@@ -98,7 +98,7 @@ pip install -r requirements.txt
      "ratios": [0.05, 0.1, 0.2, 0.3],
      "values": [3],  // 0=Full, 2=GradMatch, 3=Craig, 4=Glister, 5=Random
 
-     // ML Models
+     // ML models
      "models": ["MLP", "SVM", "Logreg"],
 
      // Output
