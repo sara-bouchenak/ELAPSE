@@ -45,7 +45,7 @@ cd ELAPSE
 pip install -r requirements.txt
 ```
 
----
+
 
 ## Running an Experiment
 
@@ -153,7 +153,7 @@ We value and encourage contributions from the research and open-source communiti
 - **Improve metrics and trace handling**:  
   Add new fairness/utility metrics, and enhance the statistical analysis workflow.
 
----
+ 
 
 ### Contribution Guidelines
 
