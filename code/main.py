@@ -7,9 +7,9 @@ import torch.nn as nn
 from torch.utils.data import DataLoader
 from types import SimpleNamespace
 
-from cords.utils.data.datasets.SL.builder import load_dataset
-from cords.utils.models import LogisticRegNet, SVMNet, MLPModel
-from cords.utils.data.dataloader.SL.adaptive import (
+from dataselection.utils.data.datasets.SL.builder import load_dataset
+from dataselection.utils.models import LogisticRegNet, SVMNet, MLPModel
+from dataselection.utils.data.dataloader.SL.adaptive import (
     GLISTERDataLoader,
     CRAIGDataLoader,
     GradMatchDataLoader,
