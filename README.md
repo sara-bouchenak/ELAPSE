@@ -221,15 +221,17 @@ The following publications are related to the data selection strategies supporte
 
 [1] Krishnateja Killamsetty, Durga Sivasubramanian, Ganesh Ramakrishnan, Abir De, Rishabh Iyer.  
 “GRAD-MATCH: Gradient Matching based Data Subset Selection for Efficient Deep Model Training”.  
-*Proceedings of the 38th International Conference on Machine Learning (ICML), 2021*, PMLR 139:5464–5474.
+*Proceedings of the 38th International Conference on Machine Learning (ICML), July 2021*, Virtual 
+Event, PMLR 139:5464–5474.
 
 [2] Krishnateja Killamsetty, Durga Sivasubramanian, Ganesh Ramakrishnan, Rishabh Iyer.  
 “GLISTER: Generalization based Data Subset Selection for Efficient and Robust Learning”.  
-*Thirty-Fifth AAAI Conference on Artificial Intelligence (AAAI), 2021*, pp. 8110–8118.
+*Thirty-Fifth AAAI Conference on Artificial Intelligence (AAAI), February 2021*, Virtual Event, 
+pp. 8110–8118.
 
-[3] Baharan Mirzasoleiman, Jeff Bilmes, Jure Leskovec.  
-“Coresets for Data-efficient Training of Machine Learning Models”.  
-*International Conference on Machine Learning (ICML), 2020*.
+[3] Baharan Mirzasoleiman, Jeff Bilmes, Jure Leskovec.  “Coresets for Data-efficient Training of 
+Machine Learning Models”. *International Conference on Machine Learning (ICML), July 2020*., Virtual 
+Event
 
    
 
