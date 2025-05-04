@@ -2,7 +2,7 @@ import math
 import torch
 import copy
 from .dataselectionstrategy import DataSelectionStrategy
-from cords.utils.data.datasets.SL.custom_dataset_selcon import CustomDataset_SELCON, CustomDataset_WithId_SELCON, SubsetDataset_WithId_SELCON
+from dataselection.utils.data.datasets.SL.custom_dataset_selcon import CustomDataset_SELCON, CustomDataset_WithId_SELCON, SubsetDataset_WithId_SELCON
 import numpy as np
 
 
