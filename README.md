@@ -6,15 +6,18 @@
 
 ## 📁 Repository Structure
 
-- `Datasets/` : Contains the real-world datasets used in ELAPSE.  
-- `Code/` : Main codebase to run experiments.  
+- `datasets/` : Contains the real-world datasets used in ELAPSE.  
+- `code/` : Main codebase to run experiments.  
   - `configs/` : Example experiment configuration files.  
-  - `results/` : Folder to store output results per configuration.  
-- `Traces/` :  
+  - `cords/selectionstrategies` : Data selection methods used in ELAPSE.
+  - `cords/utils` : Auxiliary modules for model architectures and dataset loading.   
+- `results/` : Folder to store output results per configuration. 
+- `traces/` :  
   - `DatasetProperties.csv` : Evaluated datasets and their corresponding sensitive attributes.
   - `ExperimentConfigurations.csv` : All evaluated configurations.  
   - `ExperimentMeasurements.csv` : Epoch-wise results for the different runs across all evaluated settings.
   - `ExperimentStatistics.csv` : Aggregated metrics and t-test results.  
+
 
 ## 🖥️ Running an Experiment
 
@@ -25,7 +28,7 @@ pip install -r requirements.txt
 
 ### 2. Edit configuration
 
-Add the config file to `Code/configs` to set the following parameters:
+Add the config file to `code/configs` to set the following parameters:
 
 - **Dataset**  
   Set the dataset name, its sensitive attributes and the path to the data.
@@ -108,8 +111,19 @@ Create the following structure:
 
 ### 4. Run the experiment
 ```bash
-python Code/main.py --config Code/configs/config.json
+python code/main.py --config code/configs/config.json
 ```
 
-## 📊 View Results
-Results are saved in the specified result folder.
+## 📊 Statistics and Result Traces
+
+Results are saved in the specified `results/` folder.
+
+To compute statistics:
+
+1. Run `code/selection-impact-t-test.ipynb` to apply t-tests evaluating the impact of data selection on **utility** and **fairness**.  
+2. Run `code/variability-t-test.ipynb` to apply t-tests assessing the impact of selection on **variability**.  
+3. Run `code/traces.ipynb` to generate the trace files:
+   - `ExperimentMeasurements.csv`: Epoch-wise metrics for all runs across different scenarios.  
+   - `ExperimentStatistics.csv`: Aggregated metrics and statistical test results.  
+   - `ExperimentConfigurations.csv`: All evaluated configurations in ELAPSE.  
+   - `DatasetProperties.csv`: Datasets used along with their sensitive attributes.
