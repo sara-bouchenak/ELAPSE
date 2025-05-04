@@ -2,8 +2,6 @@
 
 **ELAPSE** is a framework for evaluating the impact of data selection methods on both ML models utility and fairness. It supports configurable experimentation across a variety of datasets, models, and fairness metrics, with support for result tracing and statistical analysis.
 
----
-
 ## Features
 
 - Evaluation of selection methods on fairness and utility metrics  
@@ -12,7 +10,6 @@
 - Epoch-level and aggregated result tracing  
 - Integrated t-test analysis for selection impact and variability  
 
----
 
 ## Repository Structure
 ```bash
@@ -27,6 +24,7 @@
 ├── traces/                      # Aggregated metrics and t-test results
 └── README.md
 ```
+---
 
 ## Starting with ELAPSE
 
@@ -46,6 +44,8 @@ git clone https://github.com/sara-bouchenak/ELAPSE/
 cd ELAPSE
 pip install -r requirements.txt
 ```
+
+---
 
 ## Running an Experiment
 
@@ -105,6 +105,8 @@ results/<result_path>/
 python code/main.py --config code/configs/config.json
 ```
 
+---
+
 ## Result Tracing and Statistical Analysis
 
 ELAPSE supports detailed trace logging and statistical analysis to evaluate the impact of data selection on model fairness and utility.
@@ -130,6 +132,8 @@ jupyter notebook code/statistics/variability-t-test.ipynb
 # Generate result trace files
 jupyter notebook code/statistics/traces.ipynb
 ```
+
+---
 
 ## Extending the Framework and Contributing
 
@@ -176,11 +180,13 @@ We welcome all types of contributions. Please follow these guidelines to ensure 
 
 For substantial changes, consider opening a discussion or draft pull request first to align with the maintainers on design choices.
 
+---
 
 ## Acknowledgments
 
 ELAPSE extends [CORDS](https://github.com/decile-team/cords) by adding support for new datasets with associated sensitive attributes, integrating additional model architectures, and computing a comprehensive set of utility and fairness metrics. We thank the open-source community for the foundational tools and contributions that supported the development of this framework.
 
+---
 
 ## Publications
 
