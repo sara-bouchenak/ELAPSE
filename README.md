@@ -93,6 +93,8 @@ pip install -r requirements.txt
      "epoch": 400,
      "label_num": 2,
      "log_interval": 50,
+
+     // Several experiment runs
      "runs": 5,
 
      // Data selection configuration
