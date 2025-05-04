@@ -9,6 +9,8 @@
     "val_file": "val_ars.csv",
     "data_load": "load-ars",
 
+    "models": ["MLP", "SVM", "Logreg"],
+    
     "lr": 0.001,
     "batch_size": 512,
     "epoch": 400,
@@ -20,7 +22,7 @@
     "select_every": 20,
     "ratios": [0.05, 0.1, 0.2, 0.3],
     "values": [3], 
-    "models": ["MLP", "SVM", "Logreg"],
+    
 
     "result_path": "./results/ARS",
     "cols": ["SPD_gender", "EOD_gender", "AOD_gender", "DI_gender", "DcI_gender", "F1_score", "Precision", "Recall"]

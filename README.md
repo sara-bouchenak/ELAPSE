@@ -84,6 +84,9 @@ pip install -r requirements.txt
      "val_file": "val_ars.csv",
      "data_load": "load-ars",
 
+     // ML models
+     "models": ["MLP", "SVM", "Logreg"],
+
      // ML model hyperparameters
      "lr": 0.001,
      "batch_size": 512,
@@ -98,8 +101,7 @@ pip install -r requirements.txt
      "ratios": [0.05, 0.1, 0.2, 0.3],
      "values": [3],  // 0=Full, 2=GradMatch, 3=Craig, 4=Glister, 5=Random
 
-     // ML models
-     "models": ["MLP", "SVM", "Logreg"],
+     
 
      // Output
      "result_path": "./results/ARS",
