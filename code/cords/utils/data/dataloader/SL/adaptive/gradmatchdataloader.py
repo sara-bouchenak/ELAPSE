@@ -1,5 +1,5 @@
 from .adaptivedataloader import AdaptiveDSSDataLoader
-from cords.selectionstrategies.SL import GradMatchStrategy
+from cords.selectionmethods.SL import GradMatchStrategy
 import time, copy, torch
 import pandas as pd
 import os

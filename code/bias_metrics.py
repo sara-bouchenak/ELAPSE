@@ -84,7 +84,7 @@ def get_fair_metrics(dataset_target, dataset_pred, sensitive_att, dataframe, epo
     dataframe = dataframe.replace([-np.inf, np.inf], 2)
     return dataframe
 
-def get_fair_metrics_census(dataset_target,dataset_pred, sensitive_att, dataframe, epoch):
+def get_fair_metrics_adult(dataset_target,dataset_pred, sensitive_att, dataframe, epoch):
     """
     Measure fairness metrics.    
     Parameters: 

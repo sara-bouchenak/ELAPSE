@@ -1,5 +1,5 @@
 from .adaptivedataloader import AdaptiveDSSDataLoader
-from cords.selectionstrategies.SSL import GradMatchStrategy
+from cords.selectionmethods.SSL import GradMatchStrategy
 import time, copy, torch
 
 

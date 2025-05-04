@@ -1,5 +1,5 @@
 from .adaptivedataloader import AdaptiveDSSDataLoader
-from cords.selectionstrategies.SL import GLISTERStrategy
+from cords.selectionmethods.SL import GLISTERStrategy
 import time
 import copy
 import pandas as pd

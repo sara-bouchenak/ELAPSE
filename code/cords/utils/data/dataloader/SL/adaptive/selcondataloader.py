@@ -1,5 +1,5 @@
 from .adaptivedataloader import AdaptiveDSSDataLoader
-from cords.selectionstrategies.SL import SELCONstrategy
+from cords.selectionmethods.SL import SELCONstrategy
 import time, copy
 
 

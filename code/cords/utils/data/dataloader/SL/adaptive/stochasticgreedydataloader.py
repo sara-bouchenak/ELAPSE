@@ -1,5 +1,5 @@
 from .adaptivedataloader import AdaptiveDSSDataLoader
-from cords.selectionstrategies.SL import StochasticGreedyExplorationStrategy
+from cords.selectionmethods.SL import StochasticGreedyExplorationStrategy
 import time
 
 

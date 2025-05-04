@@ -1,5 +1,5 @@
 from .adaptivedataloader import AdaptiveDSSDataLoader
-from cords.selectionstrategies.SSL import CRAIGStrategy
+from cords.selectionmethods.SSL import CRAIGStrategy
 import time, copy
 
 

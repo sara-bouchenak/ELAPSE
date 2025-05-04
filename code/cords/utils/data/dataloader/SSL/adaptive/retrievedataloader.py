@@ -1,5 +1,5 @@
 from .adaptivedataloader import AdaptiveDSSDataLoader
-from cords.selectionstrategies.SSL import RETRIEVEStrategy
+from cords.selectionmethods.SSL import RETRIEVEStrategy
 import time, copy
 
 

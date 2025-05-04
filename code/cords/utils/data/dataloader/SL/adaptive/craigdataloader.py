@@ -1,5 +1,5 @@
 from .adaptivedataloader import AdaptiveDSSDataLoader
-from cords.selectionstrategies.SL import CRAIGStrategy
+from cords.selectionmethods.SL import CRAIGStrategy
 import time, copy
 import pandas as pd
 import torch

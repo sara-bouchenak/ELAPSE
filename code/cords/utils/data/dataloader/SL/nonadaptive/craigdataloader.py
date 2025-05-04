@@ -1,5 +1,5 @@
 from .nonadaptivedataloader import NonAdaptiveDSSDataLoader
-from cords.selectionstrategies.SL import CRAIGStrategy
+from cords.selectionmethods.SL import CRAIGStrategy
 import time, copy
 
 

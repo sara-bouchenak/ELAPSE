@@ -1,5 +1,5 @@
 from .adaptivedataloader import AdaptiveDSSDataLoader
-from cords.selectionstrategies.SL import RandomStrategy
+from cords.selectionmethods.SL import RandomStrategy
 import time
 
 
