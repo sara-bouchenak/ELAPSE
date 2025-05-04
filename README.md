@@ -74,7 +74,7 @@ pip install -r requirements.txt
 
    ```json
    {
-     // Dataset and fairness setup
+     // Datasets & sensitive attributes
      "dataset_name": "ars",
      "sensituve_attributes": ["gender"],
      "columns": ["gender", "labels"],
@@ -84,7 +84,7 @@ pip install -r requirements.txt
      "val_file": "val_ars.csv",
      "data_load": "load-ars",
 
-     // Training hyperparameters
+     // ML model hyperparameters
      "lr": 0.001,
      "batch_size": 512,
      "epoch": 400,
@@ -98,7 +98,7 @@ pip install -r requirements.txt
      "ratios": [0.05, 0.1, 0.2, 0.3],
      "values": [3],  // 0=Full, 2=GradMatch, 3=Craig, 4=Glister, 5=Random
 
-     // Models to evaluate
+     // ML Models
      "models": ["MLP", "SVM", "Logreg"],
 
      // Output
