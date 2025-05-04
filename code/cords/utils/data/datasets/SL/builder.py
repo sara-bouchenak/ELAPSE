@@ -491,7 +491,7 @@ def clean_lawschool_full(path):
     return df.to_numpy(), y.to_numpy()
 
 
-def census_load(path, dim, save_data=True):
+def adult_load(path, dim, save_data=True):
     enum = enumerate(
         ['Private', 'Self-emp-not-inc', 'Self-emp-inc', 'Federal-gov', 'Local-gov', 'State-gov', 'Without-pay',
          'Never-worked'])
@@ -768,9 +768,9 @@ def load_dataset(datadir, train_file, test_file, val_file, dset_name, isnumpy=Fa
 
         return fullset, valset, testset, num_cls
 
-    #### Census
+    #### Adult
     ############
-    elif dset_name == "load-census":
+    elif dset_name == "load-adult":
         # Paths to the saved CSV files
         trn_file = os.path.join(datadir, train_file)
         val_file = os.path.join(datadir, val_file)
@@ -1478,14 +1478,14 @@ def gen_dataset(datadir, dset_name, feature, seed=42, isnumpy=False, **kwargs):
 
         return fullset, valset, testset, num_cls
 
-    elif dset_name == "census":
+    elif dset_name == "adult":
         # trn_file = os.path.join(datadir, 'adult.data')
         data_dims = 14
         num_cls = 2
         trn_file = os.path.join(datadir, 'adult.data')
         tst_file = os.path.join(datadir, 'adult.test')
-        x_trn, y_trn = census_load(trn_file, dim=data_dims)
-        x_tst, y_tst = census_load(tst_file, dim=data_dims)
+        x_trn, y_trn = adult_load(trn_file, dim=data_dims)
+        x_tst, y_tst = adult_load(tst_file, dim=data_dims)
         x_trn, x_val, y_trn, y_val = train_test_split(x_trn, y_trn, test_size=0.1, random_state=seed)
         
         #X, y = census_load(trn_file, dim=data_dims)
@@ -1532,14 +1532,14 @@ def gen_dataset(datadir, dset_name, feature, seed=42, isnumpy=False, **kwargs):
     #######################################################################
     ########## Adult 
 
-    elif dset_name == "save-census":
+    elif dset_name == "save-adult":
          data_dims = 14
          num_cls = 2
          trn_file = os.path.join(datadir, 'adult.data')
          tst_file = os.path.join(datadir, 'adult.test')
          # Load the training and test data
-         x_trn, y_trn = census_load(trn_file, dim=data_dims)
-         x_tst, y_tst = census_load(tst_file, dim=data_dims)
+         x_trn, y_trn = adult_load(trn_file, dim=data_dims)
+         x_tst, y_tst = adult_load(tst_file, dim=data_dims)
          x_trn, x_val, y_trn, y_val = train_test_split(x_trn, y_trn, test_size=0.1, random_state=seed)
          sc = StandardScaler()
          unchanged_column_indices = [0, 8, 9]
@@ -1568,11 +1568,11 @@ def gen_dataset(datadir, dset_name, feature, seed=42, isnumpy=False, **kwargs):
          columns.append('income')
          # Save the datasets as CSV files
          train_df = pd.DataFrame(np.column_stack((x_trn, y_trn)), columns=columns)
-         train_df.to_csv(os.path.join(datadir, 'train_census.csv'), index=False)
+         train_df.to_csv(os.path.join(datadir, 'train_adult.csv'), index=False)
          val_df = pd.DataFrame(np.column_stack((x_val, y_val)), columns=columns)
-         val_df.to_csv(os.path.join(datadir, 'val_census.csv'), index=False)
+         val_df.to_csv(os.path.join(datadir, 'val_adult.csv'), index=False)
          test_df = pd.DataFrame(np.column_stack((x_tst, y_tst)), columns=columns)
-         test_df.to_csv(os.path.join(datadir, 'test_census.csv'), index=False)
+         test_df.to_csv(os.path.join(datadir, 'test_adult.csv'), index=False)
          if isnumpy:
              fullset = (x_trn, y_trn)
              valset = (x_val, y_val)
