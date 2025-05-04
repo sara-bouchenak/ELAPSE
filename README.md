@@ -4,7 +4,7 @@
 It supports configurable experimentation across a variety of datasets, models, and fairness metrics, with support for result tracing and statistical analysis.
 
 <p align="center">
-  <img src="./ELAPSE_pipeline.jpg" alt="Overview of ELAPSE experimentation framework" width="450">
+  <img src="./ELAPSE_pipeline.jpg" alt="Overview of ELAPSE experimentation framework" width="800">
 </p>
 
 ## Table of Contents
