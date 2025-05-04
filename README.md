@@ -1,6 +1,33 @@
 # ELAPSE
 
-**ELAPSE** is a framework for evaluating the impact of data selection methods on both ML models utility and fairness. It supports configurable experimentation across a variety of datasets, models, and fairness metrics, with support for result tracing and statistical analysis.
+**ELAPSE** is a framework for evaluating the impact of data selection methods on both ML models utility and fairness.  
+It supports configurable experimentation across a variety of datasets, models, and fairness metrics, with support for result tracing and statistical analysis.
+
+<p align="center">
+  <img src="ELAPSE_pipeline.pdf" alt="Overview of ELAPSE experimentation framework" width="600">
+</p>
+
+## Table of Contents
+
+- [Features](#features)  
+- [Repository Structure](#repository-structure)  
+- [Starting with ELAPSE](#starting-with-elapse)  
+  - [Software Requirements](#software-requirements)  
+  - [Hardware Recommendations](#hardware-recommendations)  
+  - [Installation](#installation)  
+- [Running an Experiment](#running-an-experiment)  
+- [Result Tracing and Statistical Analysis](#result-tracing-and-statistical-analysis)  
+  - [Output Trace Files](#output-trace-files)  
+  - [Running the Analysis](#running-the-analysis)  
+- [Extending the Framework and Contributing](#extending-the-framework-and-contributing)  
+  - [How to Extend ELAPSE](#how-to-extend-elapse)  
+  - [Contribution Guidelines](#contribution-guidelines)  
+- [Acknowledgments](#acknowledgments)  
+- [Publications](#publications)  
+- [Contact](#contact)
+
+---
+
 
 ## Features
 
@@ -177,6 +204,12 @@ We welcome all types of contributions. Please follow these guidelines to ensure 
 
 - **Testing**:  
   Ensure your changes pass existing tests and, if introducing new features, provide relevant tests.
+
+- **Contact**: 
+[Nawel Benarba](mailto:nawel.benarba@insa-lyon.fr), 
+[Zeyang Kong](mailto:zeyang.kong@insa-lyon.fr), 
+[Sara Bouchenak](mailto:sara.bouchenak@insa-lyon.fr)
+
 
 For substantial changes, consider opening a discussion or draft pull request first to align with the maintainers on design choices.
 
