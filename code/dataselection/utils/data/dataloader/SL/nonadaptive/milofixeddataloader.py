@@ -1,5 +1,5 @@
 from .nonadaptivedataloader import NonAdaptiveDSSDataLoader
-from cords.selectionmethods.SL import WeightedRandomExplorationStrategy
+from dataselection.selectionmethods.SL import WeightedRandomExplorationStrategy
 import time, copy
 
 

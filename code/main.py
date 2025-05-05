@@ -313,7 +313,7 @@ def main():
                 
                             epoch_time = time.time() - start_time - resample_time
                             acc = evaluation(testing_iter, model, args)
-                            if (epoch > 0):
+                            if (epoch > args.warmup_epochs):
                                 df_target = pd.DataFrame(data_target, columns=args.columns)
                                 df_pred = pd.DataFrame(data_pred, columns=args.columns)
                                 fair_metrics = get_fair_metrics_ars(df_target, df_pred, args.sensituve_attributes, fair_metrics, epoch)
@@ -390,7 +390,7 @@ def main():
                     
                                 epoch_time = time.time() - start_time
                                 acc = evaluation(testing_iter, model, args)
-                                if (epoch > 0):
+                                if (epoch > args.warmup_epochs):
                                     df_target = pd.DataFrame(data_target, columns=args.columns)
                                     df_pred = pd.DataFrame(data_pred, columns=args.columns)
                                     fair_metrics = get_fair_metrics_ars(df_target,df_pred, args.sensituve_attribute, fair_metrics, epoch)

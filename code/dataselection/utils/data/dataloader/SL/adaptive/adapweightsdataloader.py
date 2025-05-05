@@ -1,5 +1,5 @@
 from .adaptivedataloader import AdaptiveDSSDataLoader
-from cords.selectionmethods.SL import AdapWeightsStrategy
+from dataselection.selectionmethods.SL import AdapWeightsStrategy
 import time, copy, torch
 
 

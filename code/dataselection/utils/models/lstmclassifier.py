@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 from torch.autograd import Variable
 from torch.nn import functional as F
-from cords.utils.data.datasets.SL.builder import loadGloveModel
+from dataselection.utils.data.datasets.SL.builder import loadGloveModel
 
 class LSTMClassifier(nn.Module):
     def __init__(self, num_classes, wordvec_dim, weight_path, num_layers=1, hidden_size=150):

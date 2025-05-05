@@ -1,7 +1,7 @@
 from cgi import test
 import numpy as np
 import os
-from cords.utils.data.datasets.SL.custom_dataset_selcon import CustomDataset_WithId_SELCON
+from dataselection.utils.data.datasets.SL.custom_dataset_selcon import CustomDataset_WithId_SELCON
 import torch
 import torchvision
 from sklearn import datasets
@@ -12,18 +12,17 @@ from torchvision import transforms
 import PIL.Image as Image
 
 
-from cords.utils.data.data_utils import *
+from dataselection.utils.data.data_utils import *
 import re
 import pandas as pd
 import torch
-import torchtext.data
 import pickle
 from ..__utils import TinyImageNet
-from cords.utils.data.data_utils import WeightedSubset
+from dataselection.utils.data.data_utils import WeightedSubset
 import pandas as pd
 from datasets import load_dataset
-from cords.utils.data.datasets.SL.color_mnist import ColoredDataset
-from cords.utils.data.datasets.SL.celeba_loader import MyImageDataset, celeba
+from dataselection.utils.data.datasets.SL.color_mnist import ColoredDataset
+from dataselection.utils.data.datasets.SL.celeba_loader import MyImageDataset, celeba
 
 LABEL_MAPPINGS = {'glue_sst2':'label', 
                   'hf_trec6':'coarse_label', 

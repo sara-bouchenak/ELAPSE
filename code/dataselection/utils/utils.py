@@ -2,7 +2,6 @@ import os
 import glob
 import pandas as pd
 import numpy as np
-from asyncore import read
 import os
 import os.path as osp
 import glob

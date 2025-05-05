@@ -1,5 +1,5 @@
 from .adaptivedataloader import AdaptiveDSSDataLoader
-from cords.selectionmethods.SL import WeightedRandomExplorationStrategy
+from dataselection.selectionmethods.SL import WeightedRandomExplorationStrategy
 import time
 
 

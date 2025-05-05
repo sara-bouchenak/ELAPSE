@@ -3,7 +3,7 @@
     "sensituve_attributes":["gender"],
     "columns": ["gender", "labels"],
 
-    "dataset_path": "../Datasets/ARS/",
+    "dataset_path": "./datasets/ars/",
     "train_file": "train_ars.csv",
     "test_file": "test_ars.csv",
     "val_file": "val_ars.csv",
@@ -24,7 +24,7 @@
     "values": [3], 
     
 
-    "result_path": "./results/ARS",
-    "cols": ["SPD_gender", "EOD_gender", "AOD_gender", "DI_gender", "DcI_gender", "F1_score", "Precision", "Recall"]
-
+    "result_path": "./results/ars-selection",
+    "cols": ["SPD_gender", "EOD_gender", "AOD_gender", "DI_gender", "DcI_gender", "F1_score", "Precision", "Recall"],
+    "warmup_epochs" : 20
 } 

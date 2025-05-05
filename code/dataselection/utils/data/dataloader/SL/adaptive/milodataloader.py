@@ -1,5 +1,5 @@
 from .adaptivedataloader import AdaptiveDSSDataLoader
-from cords.selectionmethods.SL import WeightedRandomExplorationStrategy
+from dataselection.selectionmethods.SL import WeightedRandomExplorationStrategy
 from torch.utils.data import DataLoader
 from .weightedrandomdataloader import WeightedRandomDataLoader
 from .stochasticgreedydataloader import StochasticGreedyDataLoader
