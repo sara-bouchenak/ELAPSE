@@ -78,7 +78,7 @@ pip install -r requirements.txt
      "dataset_name": "ars",
      "sensituve_attributes": ["gender"],
      "columns": ["gender", "labels"],
-     "dataset_path": "../Datasets/ARS/",
+     "dataset_path": "./datasets/ars/",
      "train_file": "train_ars.csv",
      "test_file": "test_ars.csv",
      "val_file": "val_ars.csv",
@@ -111,7 +111,8 @@ pip install -r requirements.txt
        "SPD_gender", "EOD_gender", "AOD_gender",
        "DI_gender", "DcI_gender", "F1_score",
        "Precision", "Recall"
-     ]
+     ],
+     "warmup_epochs" : 20
    }
 
 2. Prepare the result folder structure.
