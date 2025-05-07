@@ -76,7 +76,7 @@ pip install -r requirements.txt
    {
      // Datasets & sensitive attributes
      "dataset_name": "ars",
-     "sensituve_attributes": ["gender"],
+     "sensitive_attributes": ["gender"],
      "columns": ["gender", "labels"],
      "dataset_path": "./datasets/ars/",
      "train_file": "train_ars.csv",

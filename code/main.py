@@ -316,7 +316,7 @@ def main():
                             if (epoch > args.warmup_epochs):
                                 df_target = pd.DataFrame(data_target, columns=args.columns)
                                 df_pred = pd.DataFrame(data_pred, columns=args.columns)
-                                fair_metrics = get_fair_metrics_ars(df_target, df_pred, args.sensituve_attributes, fair_metrics, epoch)
+                                fair_metrics = get_fair_metrics_ars(df_target, df_pred, args.sensitive_attributes, fair_metrics, epoch)
                                 fair_metrics.to_csv(f'{args.result_path}/{str_sys}/{args.dataset_name}_{args.fraction}/fair_metrics_{model_name}_{str_sys}_{x}.csv')
                                 cost_metric.loc[epoch] = [acc, epoch_time, 0]
                                 cost_metric.to_csv(f'{args.result_path}/{str_sys}/{args.dataset_name}_{args.fraction}/cost_metrics_{model_name}_{str_sys}_{x}.csv')
@@ -393,16 +393,16 @@ def main():
                                 if (epoch > args.warmup_epochs):
                                     df_target = pd.DataFrame(data_target, columns=args.columns)
                                     df_pred = pd.DataFrame(data_pred, columns=args.columns)
-                                    fair_metrics = get_fair_metrics_ars(df_target,df_pred, args.sensituve_attribute, fair_metrics, epoch)
-                                    fair_metrics.to_csv(f'{args.result_path}/{str_sys}/{args.dataset_name}_{args.fraction}/fair_metrics_{model_name}_{str_sys}_{x}.csv')
+                                    fair_metrics = get_fair_metrics_ars(df_target,df_pred, args.sensitive_attributes, fair_metrics, epoch)
+                                    fair_metrics.to_csv(f'{args.result_path}/{str_sys}/{args.dataset_name}_1/fair_metrics_{model_name}_{str_sys}_{x}.csv')
                                     cost_metric.loc[epoch] = [acc, epoch_time, 0]
-                                    cost_metric.to_csv(f'{args.result_path}/{str_sys}/{args.dataset_name}_{args.fraction}/cost_metrics_{model_name}_{str_sys}_{x}.csv')
+                                    cost_metric.to_csv(f'{args.result_path}/{str_sys}/{args.dataset_name}_1/cost_metrics_{model_name}_{str_sys}_{x}.csv')
 
 
                         run_end_time = time.time()
                         run_time = run_end_time - run_start_time
                         cost_metric['Full_training_time'] = run_time
-                        cost_metric.to_csv(f'{args.result_path}/{str_sys}/{args.dataset_name}_{args.fraction}/cost_metrics_{model_name}_{str_sys}_{x}.csv')            
+                        cost_metric.to_csv(f'{args.result_path}/{str_sys}/{args.dataset_name}_1/cost_metrics_{model_name}_{str_sys}_{x}.csv')            
                                 
 
 if __name__ == "__main__":
