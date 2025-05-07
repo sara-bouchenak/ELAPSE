@@ -90,7 +90,7 @@ class CRAIGDataLoader(AdaptiveDSSDataLoader):
         
         # Adult
         
-        if self.dataset_name == 'census':
+        if self.dataset_name == 'adult':
             try:
                 # Extract data based on subset indices
                 subset_data = [self.train_loader.dataset[idx] for idx in subset_indices]

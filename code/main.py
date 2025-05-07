@@ -19,7 +19,7 @@ from dotmap import DotMap
 import pandas as pd
 import logging
 
-from bias_metrics import get_fair_metrics_ars
+from bias_metrics import get_fair_metrics_ars, get_fair_metrics_dc, get_fair_metrics_mobiact, get_fair_metrics_adult
 
 
 def load_config(path):
@@ -52,12 +52,40 @@ def evaluation(data_iter, model, args):
         model.train()
         return 100.0 * corrects / size
 
+def num_features(args):
+    if args.dataset_name == 'ars':
+        num_features = 9
+    elif args.dataset_name == 'adult':
+        num_features = 14
+    elif args.dataset_name == 'dc':
+        num_features = 11
+    elif args.dataset_name == 'mobiact':
+        num_features = 14
+    elif args.dataset_name == 'kdd':
+        num_features = 14
+    else:
+        raise ValueError("Unknown dataset name")
+    
+    return num_features
+
+def fair_metrics_func(args):
+    if args.dataset_name == 'ars' :
+        return get_fair_metrics_ars
+    elif args.dataset_name == 'adult' or args.dataset_name == 'kdd':
+        return get_fair_metrics_adult
+    elif args.dataset_name == 'dc':
+        return get_fair_metrics_dc
+    elif args.dataset_name == 'mobiact':
+        return get_fair_metrics_mobiact
+    else:
+        raise ValueError("Unknown dataset name")
 
 def main():
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     args = parse_args()
     args.device = device
-
+    num_f = num_features(args)
+    function = fair_metrics_func(args)
 
     for model_name in args.models:
         print("*****************")
@@ -92,11 +120,11 @@ def main():
                                                  num_workers=0, pin_memory=True)
             
                     if model_name == 'MLP' :
-                        model = MLPModel(9, args.label_num).to(device)
+                        model = MLPModel(num_f, args.label_num).to(device)
                     elif model_name == 'SVM' :
-                        model = SVMNet(9, args.label_num).to(device)
+                        model = SVMNet(num_f, args.label_num).to(device)
                     else :
-                        model = LogisticRegNet(9, args.label_num).to(device)
+                        model = LogisticRegNet(num_f, args.label_num).to(device)
                 
                 
                     criterion = nn.CrossEntropyLoss()
@@ -202,7 +230,6 @@ def main():
                                                                 shuffle=True,
                                                                 pin_memory=True,
                                                                 collate_fn=None, 
-                                                                dataset_name='ars', 
                                                                 model_name = model_name, 
                                                                 ratio= args.fraction)
                         str_sys = "CRAIGPB"
@@ -301,7 +328,7 @@ def main():
                                         data_pred.append((sample[0], sample[2]))
                                         data_target.append(sample[:2])
                                 elif args.dataset_name =='dc' or args.dataset_name =='mobiact':
-                                        batch_data = zip(age, gender, labels, logits)
+                                        batch_data = zip(age, gender, targets, labels)
                                         for sample in batch_data:
                                             data_pred.append((sample[0], sample[1], sample[3]))
                                             data_target.append(sample[:3])
@@ -316,7 +343,8 @@ def main():
                             if (epoch > args.warmup_epochs):
                                 df_target = pd.DataFrame(data_target, columns=args.columns)
                                 df_pred = pd.DataFrame(data_pred, columns=args.columns)
-                                fair_metrics = get_fair_metrics_ars(df_target, df_pred, args.sensitive_attributes, fair_metrics, epoch)
+                                
+                                fair_metrics = function(df_target, df_pred, args.sensitive_attributes, fair_metrics, epoch)
                                 fair_metrics.to_csv(f'{args.result_path}/{str_sys}/{args.dataset_name}_{args.fraction}/fair_metrics_{model_name}_{str_sys}_{x}.csv')
                                 cost_metric.loc[epoch] = [acc, epoch_time, 0]
                                 cost_metric.to_csv(f'{args.result_path}/{str_sys}/{args.dataset_name}_{args.fraction}/cost_metrics_{model_name}_{str_sys}_{x}.csv')
@@ -381,7 +409,7 @@ def main():
                                             data_pred.append((sample[0], sample[1], sample[3]))
                                             data_target.append(sample[:3])
                                     elif args.dataset_name =='adult' or args.dataset_name =='kdd':
-                                        batch_data = zip(race, gender, age, targets, labels)
+                                        batch_data = zip(race, gender, age, labels, logits)
                                         for sample in batch_data:
                                             data_pred.append((sample[0], sample[1], sample[2],sample[4]))
                                             data_target.append(sample[:4])
@@ -393,7 +421,7 @@ def main():
                                 if (epoch > args.warmup_epochs):
                                     df_target = pd.DataFrame(data_target, columns=args.columns)
                                     df_pred = pd.DataFrame(data_pred, columns=args.columns)
-                                    fair_metrics = get_fair_metrics_ars(df_target,df_pred, args.sensitive_attributes, fair_metrics, epoch)
+                                    fair_metrics = function(df_target,df_pred, args.sensitive_attributes, fair_metrics, epoch)
                                     fair_metrics.to_csv(f'{args.result_path}/{str_sys}/{args.dataset_name}_1/fair_metrics_{model_name}_{str_sys}_{x}.csv')
                                     cost_metric.loc[epoch] = [acc, epoch_time, 0]
                                     cost_metric.to_csv(f'{args.result_path}/{str_sys}/{args.dataset_name}_1/cost_metrics_{model_name}_{str_sys}_{x}.csv')
