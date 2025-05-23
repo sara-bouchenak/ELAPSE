@@ -60,9 +60,9 @@ def num_features(args):
     elif args.dataset_name == 'dc':
         num_features = 11
     elif args.dataset_name == 'mobiact':
-        num_features = 14
+        num_features = 11
     elif args.dataset_name == 'kdd':
-        num_features = 14
+        num_features = 40
     else:
         raise ValueError("Unknown dataset name")
     
@@ -93,10 +93,8 @@ def main():
         print("*****************")
         for ratio in args.ratios:
             args.fraction = ratio
-            if(ratio == 0.05):
-                values_final = args.values
-            else:
-                values_final = args.values
+
+            values_final = args.values
             for i in values_final:
                 args.ss = i
                 print(i)
@@ -340,6 +338,7 @@ def main():
                 
                             epoch_time = time.time() - start_time - resample_time
                             acc = evaluation(testing_iter, model, args)
+                            
                             if (epoch > args.warmup_epochs):
                                 df_target = pd.DataFrame(data_target, columns=args.columns)
                                 df_pred = pd.DataFrame(data_pred, columns=args.columns)
@@ -415,9 +414,10 @@ def main():
                                             data_target.append(sample[:4])
 
                                     
-                    
+                                
                                 epoch_time = time.time() - start_time
                                 acc = evaluation(testing_iter, model, args)
+                                
                                 if (epoch > args.warmup_epochs):
                                     df_target = pd.DataFrame(data_target, columns=args.columns)
                                     df_pred = pd.DataFrame(data_pred, columns=args.columns)
