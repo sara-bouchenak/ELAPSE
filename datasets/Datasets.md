@@ -8,7 +8,7 @@
 
 | Dataset   | Records   | Sensitive Attributes             | Topic                                    |
 |-----------|-----------|---------------------------------|-----------------------------------------|
-| MobiAct   | 1,344,397 | Age (young/old), Gender         | Healthcare   |
+| MobiAct   | 1,344,397 | Age , Gender         | Healthcare   |
 | ARS       | 75,128    | Gender                          | Healthcare          |
 | KDD       | 272,507   | Gender, Race, Age               | Finance            |
 | DC        | 60,420    | Gender, Age                     | Finance        |
