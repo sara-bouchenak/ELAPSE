@@ -1,18 +1,18 @@
 # ELAPSE Datasets
 
-The **ELAPSE** framework uses five real-world datasets known for their potential bias issues, covering diverse application domains like activity recognition and socio-economic prediction.
+**ELAPSE** framework uses five real-world datasets known for their potential bias issues, covering diverse application domains such as activity recognition and socio-economic prediction.
 
 **Download Link:** [ELAPSE Datasets Download](https://partage.liris.cnrs.fr/index.php/s/zNEtqKgwXMLSiZo)
 
 ---
 
-| Dataset   | Records   | Sensitive Attributes             | Task                                     |
+| Dataset   | Records   | Sensitive Attributes             | Topic                                    |
 |-----------|-----------|---------------------------------|-----------------------------------------|
-| MobiAct   | 1,344,397 | Age (young/old), Gender         | Human activity recognition (standing)   |
-| ARS       | 75,128    | Gender                          | Activity recognition (lying)            |
-| KDD       | 272,507   | Gender, Race, Age               | Financial outcome prediction            |
-| DC        | 60,420    | Gender, Age                     | Occupational prestige prediction        |
-| Adult     | 48,842    | Gender, Race, Age               | Salary prediction (>50k)                |
+| MobiAct   | 1,344,397 | Age (young/old), Gender         | Healthcare   |
+| ARS       | 75,128    | Gender                          | Healthcare          |
+| KDD       | 272,507   | Gender, Race, Age               | Finance            |
+| DC        | 60,420    | Gender, Age                     | Finance        |
+| Adult     | 48,842    | Gender, Race, Age               | Finance               |
 
 ---
 
