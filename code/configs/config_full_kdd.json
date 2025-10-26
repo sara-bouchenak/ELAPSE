@@ -9,7 +9,7 @@
     "val_file": "val_kdd.csv",
     "data_load": "load-kdd",
 
-    "models": ["MLP"],
+    "models": ["MLP", "SVM", "Logreg"],
 
     "optimizer": "SGD",
     "lr": 0.001,

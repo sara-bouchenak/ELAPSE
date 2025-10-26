@@ -1,0 +1,33 @@
+{
+    "dataset_name": "voxceleb",
+    "sensitive_attributes": ["race"],
+    "columns": ["label", "race"],
+  
+    "dataset_path": "../datasets/voxceleb/",
+    "train_file": "meta_train.csv",
+    "test_file": "meta_test.csv",
+    "val_file": "meta_val.csv",
+    "data_load": "load-celebvox",
+  
+    "models": ["AudioLSTM", "AudioCNN"],
+  
+    "optimizer": "Adam",
+    "lr":  0.0002,
+    "batch_size": 64,
+    "epoch": 150,
+    "label_num": 2,
+    "log_interval": 200,
+    "runs": 1,
+
+
+    "fraction": 1.0,
+    "select_every": 20,
+    "ratios": [1.0],
+    "values": [0],
+  
+    "result_path": "../results/voxceleb-selection",
+    "cols": ["SPD_race", "EOD_race", "AOD_race", "DI_race", "DcI_race", "Accuracy", "F1_score", "Precision", "Recall"],
+    "warmup_epochs": 0,
+    "scheduler": true
+  }
+  

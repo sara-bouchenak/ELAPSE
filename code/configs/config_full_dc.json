@@ -9,7 +9,7 @@
     "val_file": "val_dc.csv",
     "data_load": "load-dc",
   
-    "models": ["MLP"],
+    "models": ["MLP", "SVM", "Logreg"],
   
     "optimizer": "SGD",
     "lr": 0.001,
