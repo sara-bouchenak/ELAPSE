@@ -48,3 +48,7 @@ from .lstmclassifier import LSTMClassifier
 from .linear_regression import RegressionNet, LogisticNet, DualNet
 from .bert_mlp import BERTMLPModel
 from .mlp import MLPModel
+from .vggm import VGGM
+from .rnn import LSTM_MFCC, AudioClassifier
+from .audio_cnn import AudioCNN
+from .audio_lstm import AudioLSTM

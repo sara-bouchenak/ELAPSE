@@ -1,20 +1,37 @@
 # ELAPSE Datasets
 
-**ELAPSE** framework uses five real-world datasets known for their potential bias issues, covering diverse application domains such as activity recognition and socio-economic prediction.
+**ELAPSE** framework uses 9 real-world datasets known for their potential bias issues, covering diverse application domains such as activity recognition and socio-economic prediction.
 
 **Download Link:** [ELAPSE Datasets Download](https://partage.liris.cnrs.fr/index.php/s/zNEtqKgwXMLSiZo)
 
 ---
 
-| Dataset   | Records   | Sensitive Attributes             | Topic                                    |
-|-----------|-----------|---------------------------------|-----------------------------------------|
-| MobiAct   | 1,344,397 | Age , Gender         | Healthcare   |
-| ARS       | 75,128    | Gender                          | Healthcare          |
-| KDD       | 272,507   | Gender, Race, Age               | Finance            |
-| DC        | 60,420    | Gender, Age                     | Finance        |
-| Adult     | 48,842    | Gender, Race, Age               | Finance               |
+| **Dataset** | **#Tuples** | **Sensitive Attributes** | **Topic**              |
+|--------------|-------------|--------------------------|------------------------|
+| **Image**    |             |                          |                        |
+| CelebA       | 202,599     | Gender, Age              | Emotion analysis       |
+| FairFace     | 108,501     | Race, Age                | Demographic analysis   |
+| **Audio**    |             |                          |                        |
+| AudioMNIST   | 5,000       | Gender, Age              | Education              |
+| VoxCeleb     | 5,000       | Race                     | Demographic analysis   |
+| **Tabular**  |             |                          |                        |
+| MobiAct      | 1,344,397   | Gender, Age              | Healthcare             |
+| KDD          | 272,507     | Gender, Race, Age        | Finance                |
+| ARS          | 75,128      | Gender                   | Healthcare             |
+| DC           | 60,420      | Gender, Age              | Finance                |
+| Adult        | 48,842      | Gender, Race, Age        | Finance                |
+
 
 ---
+
+
+**CelebA.** The CelebA dataset comprises 202,599 celebrity face images annotated with 40 facial attributes. In our experiments, we focus on gender and age as sensitive attributes. The main task involves emotion recognition, where the objective is to predict whether a person is smiling or not.
+
+**FairFace.** This dataset contains 108,501 human face images. We consider race and age as sensitive attributes. Race is binarized into two groups, while age is binarized into young (under 40) and old (40 and above). The prediction task consists of demographic classification, typically focusing on identifying a person’s gender.
+
+**AudioMNIST.** The original AudioMNIST dataset contains 30,000 audio recordings of spoken digits (0–9) by 60 speakers. In our experiments, we use a subset of 5,000 samples. We consider gender and age as sensitive attributes. The task is to recognize whether the spoken digits are even or odd numbers.
+
+**VoxCeleb.** VoxCeleb contains audio recordings from thousands of speakers extracted from YouTube interviews. We use a subset of 5,000 samples and consider race as the sensitive attribute. The dataset is used for a demographic prediction task where models are evaluated on their ability to classify speaker gender.
 
 **MobiAct.** A large-scale dataset with 1,344,397 records from accelerometer and gyroscope sensors, used for human activity recognition. Age and gender are sensitive attributes, with age binarized into young people (i.e., aged under 50 years) and old people. The primary objective is to identify individuals who are standing and those who are not.
 

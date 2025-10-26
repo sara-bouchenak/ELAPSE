@@ -1,0 +1,253 @@
+dataset,model,system,ratio,test_time,test_acc,test_f1,test_precision,test_recall,test_SPD_gender,test_EOD_gender,test_AOD_gender,test_DI_gender,test_DcI_gender,test_SPD_age,test_EOD_age,test_AOD_age,test_DI_age,test_DcI_age,test_SPD_race,test_EOD_race,test_AOD_race,test_DI_race,test_DcI_race
+ars,Logreg,CRAIGPB,0.05,positive,negative,negative,negative,negative,positive,negative,negative,insignificant-p2,negative, , , , , , , , , , 
+ars,Logreg,CRAIGPB,0.1,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,insignificant-p2,negative, , , , , , , , , , 
+ars,Logreg,CRAIGPB,0.2,positive,negative,negative,negative,negative,insignificant,negative,negative,insignificant,negative, , , , , , , , , , 
+ars,Logreg,CRAIGPB,0.3,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,insignificant-p2,negative, , , , , , , , , , 
+ars,Logreg,GLISTERPB,0.05,positive,negative,negative,negative,negative,positive,negative,negative,insignificant,negative, , , , , , , , , , 
+ars,Logreg,GLISTERPB,0.1,positive,negative,negative,negative,negative,positive,negative,negative,positive,negative, , , , , , , , , , 
+ars,Logreg,GLISTERPB,0.2,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,insignificant-p2,negative, , , , , , , , , , 
+ars,Logreg,GLISTERPB,0.3,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,insignificant-p2,negative, , , , , , , , , , 
+ars,Logreg,GradMatchPB,0.05,positive,negative,negative,negative,negative,positive,negative,negative,positive,negative, , , , , , , , , , 
+ars,Logreg,GradMatchPB,0.1,positive,negative,negative,insignificant,negative,positive,negative,negative,positive,negative, , , , , , , , , , 
+ars,Logreg,GradMatchPB,0.2,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,insignificant-p2,negative, , , , , , , , , , 
+ars,Logreg,GradMatchPB,0.3,positive,insignificant,insignificant,negative,insignificant,insignificant,insignificant,negative,insignificant,insignificant, , , , , , , , , , 
+ars,MLP,CRAIGPB,0.05,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,insignificant-p2,negative, , , , , , , , , , 
+ars,MLP,CRAIGPB,0.1,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,insignificant-p2,negative, , , , , , , , , , 
+ars,MLP,CRAIGPB,0.2,negative,negative,negative,negative,insignificant,insignificant-p2,negative,insignificant,insignificant-p2,insignificant-p2, , , , , , , , , , 
+ars,MLP,CRAIGPB,0.3,negative,negative,negative,negative,positive,insignificant-p2,negative,negative,insignificant-p2,insignificant, , , , , , , , , , 
+ars,MLP,GLISTERPB,0.05,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,insignificant-p2,insignificant, , , , , , , , , , 
+ars,MLP,GLISTERPB,0.1,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,insignificant-p2,insignificant-p2, , , , , , , , , , 
+ars,MLP,GLISTERPB,0.2,negative,negative,negative,negative,positive,insignificant-p2,negative,insignificant,insignificant-p2,insignificant-p2, , , , , , , , , , 
+ars,MLP,GLISTERPB,0.3,negative,negative,negative,negative,positive,insignificant-p2,negative,negative,insignificant-p2,insignificant, , , , , , , , , , 
+ars,MLP,GradMatchPB,0.05,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,insignificant-p2,negative, , , , , , , , , , 
+ars,MLP,GradMatchPB,0.1,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,insignificant-p2,negative, , , , , , , , , , 
+ars,MLP,GradMatchPB,0.2,negative,negative,negative,negative,insignificant,insignificant-p2,negative,insignificant,insignificant-p2,insignificant-p2, , , , , , , , , , 
+ars,MLP,GradMatchPB,0.3,negative,negative,negative,negative,positive,insignificant-p2,negative,negative,insignificant-p2,negative, , , , , , , , , , 
+ars,SVM,CRAIGPB,0.05,negative,negative,negative,negative,negative,positive,negative,negative,insignificant-p2,negative, , , , , , , , , , 
+ars,SVM,CRAIGPB,0.1,negative,negative,negative,negative,negative,positive,negative,negative,insignificant-p2,negative, , , , , , , , , , 
+ars,SVM,CRAIGPB,0.2,negative,negative,negative,negative,negative,insignificant-p2,negative,negative,insignificant-p2,negative, , , , , , , , , , 
+ars,SVM,CRAIGPB,0.3,negative,negative,negative,negative,negative,insignificant-p2,negative,negative,insignificant-p2,negative, , , , , , , , , , 
+ars,SVM,GLISTERPB,0.05,negative,negative,negative,negative,negative,positive,negative,negative,positive,negative, , , , , , , , , , 
+ars,SVM,GLISTERPB,0.1,negative,negative,negative,negative,negative,positive,negative,negative,insignificant-p2,negative, , , , , , , , , , 
+ars,SVM,GLISTERPB,0.2,negative,negative,negative,negative,negative,insignificant-p2,negative,negative,insignificant-p2,negative, , , , , , , , , , 
+ars,SVM,GLISTERPB,0.3,negative,negative,negative,negative,negative,insignificant-p2,negative,negative,insignificant-p2,negative, , , , , , , , , , 
+ars,SVM,GradMatchPB,0.05,negative,negative,negative,negative,negative,positive,negative,negative,insignificant-p2,negative, , , , , , , , , , 
+ars,SVM,GradMatchPB,0.1,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,insignificant-p2,negative, , , , , , , , , , 
+ars,SVM,GradMatchPB,0.2,negative,negative,negative,negative,negative,insignificant-p2,negative,negative,insignificant-p2,negative, , , , , , , , , , 
+ars,SVM,GradMatchPB,0.3,negative,negative,negative,negative,negative,insignificant-p2,negative,negative,insignificant-p2,negative, , , , , , , , , , 
+dc,Logreg,CRAIGPB,0.05,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative, , , , , 
+dc,Logreg,CRAIGPB,0.1,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,positive,negative,negative,positive,insignificant-p2, , , , , 
+dc,Logreg,CRAIGPB,0.2,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,positive,negative,negative,positive,positive, , , , , 
+dc,Logreg,CRAIGPB,0.3,negative,negative,negative,negative,negative,positive,positive,positive,positive,positive,positive,negative,negative,positive,positive, , , , , 
+dc,Logreg,GLISTERPB,0.05,positive,negative,negative,negative,positive,positive,insignificant,negative,positive,negative,negative,negative,negative,negative,negative, , , , , 
+dc,Logreg,GLISTERPB,0.1,positive,negative,negative,negative,insignificant,negative,negative,negative,negative,negative,positive,negative,insignificant,positive,negative, , , , , 
+dc,Logreg,GLISTERPB,0.2,positive,negative,negative,negative,negative,insignificant-p2,insignificant,insignificant,insignificant,insignificant,positive,negative,negative,positive,positive, , , , , 
+dc,Logreg,GLISTERPB,0.3,positive,negative,negative,insignificant,negative,positive,positive,positive,positive,positive,positive,negative,negative,positive,positive, , , , , 
+dc,Logreg,GradMatchPB,0.05,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,insignificant,negative,negative,insignificant,negative, , , , , 
+dc,Logreg,GradMatchPB,0.1,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,positive,negative,negative,positive,insignificant-p2, , , , , 
+dc,Logreg,GradMatchPB,0.2,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,positive,negative,negative,positive,insignificant-p2, , , , , 
+dc,Logreg,GradMatchPB,0.3,positive,negative,negative,positive,negative,positive,positive,positive,positive,positive,positive,negative,negative,positive,positive, , , , , 
+dc,MLP,CRAIGPB,0.05,positive,negative,negative,positive,negative,negative,negative,insignificant,negative,negative,positive,positive,positive,positive,positive, , , , , 
+dc,MLP,CRAIGPB,0.1,positive,negative,negative,positive,negative,negative,insignificant,positive,negative,negative,positive,positive,positive,positive,positive, , , , , 
+dc,MLP,CRAIGPB,0.2,positive,negative,negative,positive,negative,insignificant,insignificant,insignificant,insignificant,insignificant,positive,positive,positive,positive,positive, , , , , 
+dc,MLP,CRAIGPB,0.3,positive,negative,negative,positive,negative,insignificant,insignificant,insignificant,insignificant,insignificant,positive,positive,positive,positive,insignificant-p2, , , , , 
+dc,MLP,GLISTERPB,0.05,positive,negative,negative,positive,negative,insignificant,positive,insignificant,insignificant,negative,positive,positive,positive,positive,positive, , , , , 
+dc,MLP,GLISTERPB,0.1,positive,negative,negative,positive,negative,negative,insignificant,positive,negative,negative,positive,positive,positive,positive,positive, , , , , 
+dc,MLP,GLISTERPB,0.2,positive,negative,negative,positive,negative,insignificant,insignificant,positive,insignificant,insignificant,positive,positive,positive,positive,positive, , , , , 
+dc,MLP,GLISTERPB,0.3,positive,negative,negative,insignificant,negative,negative,negative,negative,negative,negative,positive,positive,positive,positive,insignificant-p2, , , , , 
+dc,MLP,GradMatchPB,0.05,positive,negative,negative,positive,negative,negative,negative,insignificant,negative,negative,positive,positive,positive,positive,positive, , , , , 
+dc,MLP,GradMatchPB,0.1,positive,negative,negative,positive,negative,insignificant,positive,positive,negative,negative,positive,positive,positive,positive,positive, , , , , 
+dc,MLP,GradMatchPB,0.2,positive,negative,negative,positive,negative,insignificant,insignificant,insignificant,insignificant,insignificant,positive,positive,positive,positive,positive, , , , , 
+dc,MLP,GradMatchPB,0.3,positive,negative,negative,positive,negative,insignificant,insignificant,insignificant,insignificant,insignificant,positive,positive,positive,positive,insignificant-p2, , , , , 
+dc,SVM,CRAIGPB,0.05,positive,negative,negative,positive,negative,insignificant,insignificant,insignificant-p2,negative,insignificant,positive,positive,positive,positive,positive, , , , , 
+dc,SVM,CRAIGPB,0.1,positive,negative,negative,positive,negative,negative,negative,insignificant-p2,negative,negative,positive,positive,positive,positive,insignificant-p2, , , , , 
+dc,SVM,CRAIGPB,0.2,negative,negative,negative,positive,negative,negative,negative,insignificant-p2,negative,negative,positive,positive,positive,positive,insignificant-p2, , , , , 
+dc,SVM,CRAIGPB,0.3,negative,negative,negative,positive,negative,insignificant,insignificant,insignificant,insignificant,insignificant,positive,positive,positive,positive,insignificant-p2, , , , , 
+dc,SVM,GLISTERPB,0.05,positive,negative,negative,positive,negative,negative,negative,negative,negative,negative,positive,positive,positive,positive,positive, , , , , 
+dc,SVM,GLISTERPB,0.1,positive,negative,negative,positive,negative,negative,negative,insignificant-p2,negative,negative,positive,positive,positive,positive,insignificant-p2, , , , , 
+dc,SVM,GLISTERPB,0.2,positive,negative,negative,positive,negative,insignificant,insignificant,negative,insignificant,insignificant,positive,positive,positive,positive,positive, , , , , 
+dc,SVM,GLISTERPB,0.3,positive,negative,negative,positive,negative,insignificant,insignificant,negative,insignificant,insignificant,positive,positive,positive,positive,insignificant-p2, , , , , 
+dc,SVM,GradMatchPB,0.05,positive,negative,negative,insignificant,negative,negative,negative,negative,negative,negative,positive,positive,positive,positive,insignificant-p2, , , , , 
+dc,SVM,GradMatchPB,0.1,positive,negative,negative,positive,negative,negative,negative,insignificant-p2,negative,negative,positive,positive,positive,positive,positive, , , , , 
+dc,SVM,GradMatchPB,0.2,positive,negative,negative,positive,negative,negative,negative,insignificant,negative,negative,positive,positive,positive,positive,insignificant-p2, , , , , 
+dc,SVM,GradMatchPB,0.3,negative,negative,negative,positive,negative,negative,negative,insignificant,negative,negative,positive,positive,positive,positive,insignificant-p2, , , , , 
+kdd,Logreg,CRAIGPB,0.05,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,positive,negative,positive,negative,negative,positive,negative,positive,positive,positive,positive,positive
+kdd,Logreg,CRAIGPB,0.1,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,positive,negative,positive,negative,negative,positive,negative,positive,positive,positive,positive,positive
+kdd,Logreg,CRAIGPB,0.2,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,positive,negative,positive,negative,negative,positive,negative,insignificant-p2,positive,positive,positive,positive
+kdd,Logreg,CRAIGPB,0.3,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,positive,negative,insignificant-p2,insignificant-p2,insignificant-p2,positive,negative,insignificant-p2,insignificant-p2,insignificant-p2,positive,insignificant
+kdd,Logreg,GLISTERPB,0.05,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,insignificant,negative,positive,negative,negative,positive,negative,positive,positive,positive,positive,positive
+kdd,Logreg,GLISTERPB,0.1,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,positive,negative,positive,negative,negative,positive,negative,positive,positive,positive,positive,positive
+kdd,Logreg,GLISTERPB,0.2,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,positive,negative,insignificant-p2,negative,negative,positive,negative,insignificant-p2,positive,positive,positive,positive
+kdd,Logreg,GLISTERPB,0.3,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,positive,negative,insignificant-p2,insignificant-p2,insignificant-p2,positive,insignificant,insignificant-p2,insignificant-p2,insignificant-p2,positive,negative
+kdd,Logreg,GradMatchPB,0.05,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,positive,negative,positive,negative,negative,positive,negative,positive,positive,positive,positive,positive
+kdd,Logreg,GradMatchPB,0.1,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,positive,negative,positive,negative,negative,positive,negative,positive,positive,positive,positive,positive
+kdd,Logreg,GradMatchPB,0.2,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,positive,negative,insignificant-p2,insignificant,insignificant,positive,negative,insignificant-p2,positive,positive,positive,positive
+kdd,Logreg,GradMatchPB,0.3,negative,negative,negative,negative,negative,insignificant-p2,negative,negative,positive,negative,insignificant-p2,insignificant,insignificant-p2,positive,negative,insignificant-p2,insignificant-p2,insignificant-p2,positive,insignificant-p2
+kdd,MLP,CRAIGPB,0.05,positive,negative,negative,insignificant,negative,insignificant-p2,positive,positive,insignificant,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive
+kdd,MLP,CRAIGPB,0.1,positive,negative,negative,negative,negative,insignificant-p2,positive,positive,positive,positive,insignificant-p2,positive,positive,positive,positive,insignificant-p2,positive,positive,positive,positive
+kdd,MLP,CRAIGPB,0.2,positive,negative,negative,insignificant,negative,insignificant-p2,positive,insignificant-p2,positive,insignificant,insignificant-p2,positive,positive,positive,positive,insignificant-p2,positive,positive,insignificant-p2,positive
+kdd,MLP,CRAIGPB,0.3,negative,negative,negative,insignificant,negative,insignificant-p2,negative,negative,negative,negative,insignificant-p2,positive,insignificant-p2,insignificant-p2,insignificant-p2,insignificant-p2,insignificant-p2,insignificant-p2,negative,insignificant
+kdd,MLP,GLISTERPB,0.05,positive,negative,negative,positive,negative,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive
+kdd,MLP,GLISTERPB,0.1,positive,negative,negative,insignificant,negative,insignificant-p2,positive,positive,positive,positive,positive,positive,positive,positive,positive,insignificant-p2,positive,positive,positive,positive
+kdd,MLP,GLISTERPB,0.2,positive,negative,negative,positive,negative,insignificant-p2,positive,insignificant-p2,insignificant,positive,insignificant-p2,positive,positive,positive,insignificant-p2,insignificant-p2,positive,positive,insignificant-p2,positive
+kdd,MLP,GLISTERPB,0.3,negative,insignificant,negative,positive,negative,insignificant-p2,insignificant,insignificant,negative,negative,insignificant-p2,negative,insignificant,negative,negative,insignificant-p2,insignificant,insignificant,negative,negative
+kdd,MLP,GradMatchPB,0.05,positive,negative,negative,negative,negative,insignificant-p2,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive
+kdd,MLP,GradMatchPB,0.1,positive,negative,negative,negative,negative,insignificant-p2,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive
+kdd,MLP,GradMatchPB,0.2,positive,negative,negative,negative,negative,insignificant-p2,positive,insignificant-p2,positive,insignificant,insignificant-p2,positive,positive,positive,positive,insignificant-p2,positive,positive,positive,positive
+kdd,MLP,GradMatchPB,0.3,positive,negative,negative,negative,negative,insignificant,positive,insignificant-p2,insignificant,positive,insignificant,positive,insignificant-p2,insignificant-p2,insignificant-p2,insignificant,positive,insignificant-p2,insignificant,positive
+kdd,SVM,CRAIGPB,0.05,positive,negative,negative,negative,negative,positive,negative,negative,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive
+kdd,SVM,CRAIGPB,0.1,positive,negative,negative,negative,negative,positive,negative,negative,positive,positive,insignificant-p2,positive,positive,positive,positive,positive,positive,positive,positive,positive
+kdd,SVM,CRAIGPB,0.2,negative,negative,negative,negative,negative,positive,negative,negative,positive,positive,insignificant-p2,positive,positive,positive,positive,insignificant-p2,positive,positive,positive,positive
+kdd,SVM,CRAIGPB,0.3,negative,negative,negative,negative,negative,positive,negative,negative,positive,positive,insignificant-p2,positive,positive,positive,positive,insignificant-p2,positive,positive,positive,positive
+kdd,SVM,GLISTERPB,0.05,positive,negative,negative,negative,negative,positive,negative,negative,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive
+kdd,SVM,GLISTERPB,0.1,positive,negative,negative,negative,negative,positive,negative,negative,positive,positive,insignificant-p2,positive,positive,positive,positive,positive,positive,positive,positive,positive
+kdd,SVM,GLISTERPB,0.2,positive,negative,negative,negative,negative,positive,negative,negative,positive,positive,insignificant-p2,positive,positive,positive,positive,insignificant-p2,positive,positive,positive,positive
+kdd,SVM,GLISTERPB,0.3,negative,negative,negative,insignificant,negative,positive,negative,negative,positive,positive,insignificant-p2,positive,positive,positive,positive,insignificant-p2,positive,positive,positive,positive
+kdd,SVM,GradMatchPB,0.05,positive,negative,negative,negative,negative,positive,negative,negative,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive
+kdd,SVM,GradMatchPB,0.1,positive,negative,negative,negative,negative,positive,negative,negative,positive,positive,insignificant-p2,positive,positive,positive,positive,positive,positive,positive,positive,positive
+kdd,SVM,GradMatchPB,0.2,positive,negative,negative,negative,negative,positive,negative,negative,positive,positive,insignificant-p2,positive,positive,positive,positive,insignificant-p2,positive,positive,positive,positive
+kdd,SVM,GradMatchPB,0.3,negative,negative,negative,negative,negative,positive,negative,negative,positive,positive,insignificant-p2,positive,positive,positive,positive,insignificant-p2,positive,positive,positive,positive
+adult,Logreg,CRAIGPB,0.05,positive,negative,negative,positive,negative,negative,negative,negative,negative,negative,positive,negative,negative,positive,negative,positive,positive,positive,positive,positive
+adult,Logreg,CRAIGPB,0.1,positive,negative,negative,positive,negative,negative,negative,negative,negative,negative,positive,negative,insignificant,positive,insignificant,positive,positive,positive,positive,positive
+adult,Logreg,CRAIGPB,0.2,positive,negative,negative,positive,negative,insignificant-p2,negative,negative,insignificant-p2,negative,positive,negative,insignificant-p2,positive,positive,positive,positive,positive,positive,positive
+adult,Logreg,CRAIGPB,0.3,positive,negative,negative,positive,negative,positive,negative,negative,positive,negative,positive,negative,insignificant,positive,positive,positive,positive,positive,positive,positive
+adult,Logreg,GLISTERPB,0.05,positive,negative,negative,positive,negative,negative,negative,negative,negative,negative,positive,negative,negative,positive,negative,positive,positive,positive,positive,positive
+adult,Logreg,GLISTERPB,0.1,positive,negative,negative,positive,negative,negative,negative,negative,negative,negative,positive,negative,negative,positive,negative,positive,positive,positive,positive,positive
+adult,Logreg,GLISTERPB,0.2,positive,negative,negative,positive,negative,insignificant-p2,negative,negative,insignificant,negative,positive,negative,negative,positive,positive,positive,positive,positive,positive,positive
+adult,Logreg,GLISTERPB,0.3,positive,negative,negative,positive,negative,positive,negative,negative,positive,negative,positive,negative,insignificant-p2,positive,positive,positive,positive,positive,positive,positive
+adult,Logreg,GradMatchPB,0.05,positive,negative,negative,positive,negative,negative,negative,negative,negative,negative,positive,negative,negative,positive,negative,positive,positive,positive,positive,positive
+adult,Logreg,GradMatchPB,0.1,positive,negative,negative,positive,negative,negative,negative,negative,negative,negative,positive,negative,negative,positive,negative,positive,positive,positive,positive,positive
+adult,Logreg,GradMatchPB,0.2,positive,negative,negative,positive,negative,insignificant-p2,negative,negative,positive,negative,positive,negative,insignificant,positive,insignificant-p2,positive,positive,positive,positive,positive
+adult,Logreg,GradMatchPB,0.3,positive,negative,negative,positive,negative,insignificant-p2,negative,negative,positive,negative,positive,negative,insignificant,positive,positive,positive,positive,positive,positive,positive
+adult,SVM,CRAIGPB,0.05,positive,negative,negative,negative,negative,positive,negative,negative,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive
+adult,SVM,CRAIGPB,0.1,positive,negative,negative,negative,negative,positive,negative,negative,positive,positive,positive,positive,positive,positive,insignificant,positive,positive,positive,positive,positive
+adult,SVM,CRAIGPB,0.2,positive,negative,negative,insignificant,negative,positive,negative,negative,positive,positive,positive,positive,positive,positive,insignificant-p2,positive,positive,positive,positive,positive
+adult,SVM,CRAIGPB,0.3,positive,insignificant,negative,positive,negative,positive,insignificant-p2,positive,positive,positive,positive,positive,positive,positive,insignificant,insignificant-p2,positive,positive,positive,insignificant-p2
+adult,SVM,GLISTERPB,0.05,positive,negative,negative,negative,negative,positive,negative,negative,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive,positive
+adult,SVM,GLISTERPB,0.1,positive,negative,negative,negative,negative,positive,negative,negative,positive,positive,positive,positive,positive,positive,insignificant-p2,positive,positive,positive,positive,positive
+adult,SVM,GLISTERPB,0.2,positive,negative,negative,negative,negative,positive,negative,insignificant,positive,positive,positive,positive,positive,positive,negative,positive,positive,positive,positive,positive
+adult,SVM,GLISTERPB,0.3,positive,insignificant,negative,positive,negative,positive,insignificant-p2,positive,positive,insignificant-p2,insignificant-p2,positive,positive,positive,insignificant,insignificant-p2,positive,positive,positive,insignificant-p2
+adult,SVM,GradMatchPB,0.05,positive,negative,negative,negative,negative,positive,negative,negative,positive,positive,positive,positive,positive,positive,insignificant,positive,positive,positive,positive,positive
+adult,SVM,GradMatchPB,0.1,positive,negative,negative,negative,insignificant,positive,negative,negative,positive,positive,positive,positive,positive,positive,insignificant-p2,positive,positive,positive,positive,positive
+adult,SVM,GradMatchPB,0.2,positive,negative,negative,insignificant,negative,positive,negative,negative,positive,positive,positive,positive,positive,positive,negative,positive,positive,positive,positive,positive
+adult,SVM,GradMatchPB,0.3,positive,negative,negative,insignificant,negative,positive,insignificant-p2,positive,positive,insignificant-p2,positive,positive,positive,positive,insignificant-p2,insignificant-p2,positive,positive,positive,positive
+adult,MLP,CRAIGPB,0.05,positive,negative,negative,negative,negative,insignificant,insignificant,insignificant,insignificant,insignificant,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative
+adult,MLP,CRAIGPB,0.1,positive,negative,negative,insignificant,negative,negative,negative,negative,negative,negative,insignificant,negative,negative,negative,negative,positive,positive,positive,positive,positive
+adult,MLP,CRAIGPB,0.2,positive,negative,negative,insignificant,negative,negative,negative,negative,negative,negative,insignificant,negative,negative,negative,negative,positive,insignificant,positive,positive,insignificant
+adult,MLP,CRAIGPB,0.3,positive,negative,negative,insignificant,negative,insignificant-p2,insignificant,insignificant,insignificant,insignificant,insignificant,negative,negative,negative,insignificant,insignificant-p2,insignificant-p2,insignificant-p2,insignificant,insignificant
+adult,MLP,GLISTERPB,0.05,positive,negative,negative,insignificant,negative,insignificant-p2,insignificant,insignificant,insignificant,insignificant,insignificant-p2,negative,negative,negative,negative,insignificant-p2,negative,negative,negative,negative
+adult,MLP,GLISTERPB,0.1,positive,negative,negative,negative,negative,insignificant,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative
+adult,MLP,GLISTERPB,0.2,positive,negative,negative,insignificant,negative,insignificant-p2,insignificant,insignificant,insignificant,insignificant-p2,insignificant,negative,negative,negative,negative,insignificant,negative,negative,negative,negative
+adult,MLP,GLISTERPB,0.3,positive,negative,negative,negative,negative,insignificant-p2,insignificant-p2,insignificant-p2,insignificant-p2,insignificant-p2,insignificant-p2,positive,insignificant-p2,insignificant-p2,insignificant-p2,insignificant,negative,negative,negative,negative
+adult,MLP,GradMatchPB,0.05,positive,negative,negative,negative,negative,insignificant,insignificant,insignificant,insignificant,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative
+adult,MLP,GradMatchPB,0.1,positive,negative,negative,insignificant,negative,insignificant-p2,insignificant,insignificant,insignificant,insignificant,insignificant-p2,negative,insignificant,negative,insignificant,insignificant-p2,negative,negative,negative,negative
+adult,MLP,GradMatchPB,0.2,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative
+adult,MLP,GradMatchPB,0.3,positive,negative,negative,insignificant,negative,insignificant,negative,negative,negative,negative,insignificant-p2,positive,insignificant-p2,insignificant,positive,insignificant,negative,negative,negative,negative
+mobiact,MLP,CRAIGPB,0.05,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative, , , , , 
+mobiact,MLP,CRAIGPB,0.1,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative, , , , , 
+mobiact,MLP,CRAIGPB,0.2,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,insignificant,insignificant-p2,insignificant-p2,insignificant,negative, , , , , 
+mobiact,MLP,CRAIGPB,0.3,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,insignificant-p2,negative,negative,negative, , , , , 
+mobiact,MLP,GLISTERPB,0.05,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative, , , , , 
+mobiact,MLP,GLISTERPB,0.1,positive,positive,positive,positive,positive,positive,negative,insignificant-p2,positive,negative,negative,insignificant-p2,insignificant-p2,negative,negative, , , , , 
+mobiact,MLP,GLISTERPB,0.2,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,insignificant-p2,insignificant-p2,insignificant,insignificant-p2,negative, , , , , 
+mobiact,MLP,GLISTERPB,0.3,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,insignificant-p2,negative,negative,negative, , , , , 
+mobiact,MLP,GradMatchPB,0.05,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative, , , , , 
+mobiact,MLP,GradMatchPB,0.1,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative, , , , , 
+mobiact,MLP,GradMatchPB,0.2,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,insignificant-p2,insignificant,negative,insignificant-p2,negative, , , , , 
+mobiact,MLP,GradMatchPB,0.3,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative, , , , , 
+celeba,ResNet18,CRAIGPB,0.05,positive,negative,negative,negative,negative,insignificant,negative,negative,insignificant,negative,insignificant-p2,insignificant,negative,insignificant-p2,insignificant, , , , , 
+celeba,ResNet18,CRAIGPB,0.1,positive,negative,negative,negative,negative,insignificant-p2,insignificant,insignificant,insignificant-p2,negative,insignificant-p2,insignificant,negative,insignificant-p2,insignificant, , , , , 
+celeba,ResNet18,CRAIGPB,0.2,positive,negative,negative,negative,negative,insignificant,insignificant,negative,insignificant,negative,insignificant,insignificant,insignificant,insignificant,insignificant, , , , , 
+celeba,ResNet18,CRAIGPB,0.3,positive,negative,negative,negative,negative,insignificant,negative,negative,insignificant,negative,insignificant-p2,insignificant-p2,insignificant-p2,insignificant-p2,insignificant, , , , , 
+celeba,ResNet18,GLISTERPB,0.05,positive,negative,negative,negative,negative,insignificant-p2,negative,negative,insignificant-p2,negative,insignificant-p2,insignificant,negative,insignificant-p2,insignificant, , , , , 
+celeba,ResNet18,GLISTERPB,0.1,positive,negative,negative,negative,negative,insignificant,negative,negative,insignificant,negative,insignificant-p2,insignificant,insignificant,insignificant-p2,positive, , , , , 
+celeba,ResNet18,GLISTERPB,0.2,positive,negative,negative,negative,negative,negative,negative,negative,insignificant,negative,insignificant-p2,insignificant,insignificant,insignificant-p2,insignificant, , , , , 
+celeba,ResNet18,GLISTERPB,0.3,positive,negative,negative,negative,negative,insignificant,negative,negative,insignificant,negative,insignificant-p2,insignificant-p2,insignificant,insignificant-p2,insignificant, , , , , 
+celeba,ResNet18,GradMatchPB,0.05,positive,negative,negative,negative,negative,insignificant,negative,negative,insignificant,negative,insignificant-p2,insignificant,negative,insignificant-p2,positive, , , , , 
+celeba,ResNet18,GradMatchPB,0.1,positive,negative,negative,negative,negative,insignificant-p2,insignificant,insignificant,insignificant-p2,negative,insignificant,negative,negative,insignificant,insignificant, , , , , 
+celeba,ResNet18,GradMatchPB,0.2,positive,negative,negative,negative,negative,insignificant,negative,negative,insignificant,negative,insignificant,insignificant,insignificant,insignificant-p2,positive, , , , , 
+celeba,ResNet18,GradMatchPB,0.3,positive,negative,negative,negative,negative,insignificant,insignificant,negative,insignificant,negative,insignificant,insignificant,negative,insignificant,insignificant, , , , , 
+celeba,VGG,CRAIGPB,0.05,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,insignificant-p2,negative,insignificant,insignificant-p2,insignificant, , , , , 
+celeba,VGG,CRAIGPB,0.1,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,insignificant,negative,insignificant,insignificant,positive, , , , , 
+celeba,VGG,CRAIGPB,0.2,positive,negative,negative,negative,negative,insignificant,negative,insignificant,insignificant,negative,insignificant-p2,negative,insignificant,insignificant-p2,insignificant, , , , , 
+celeba,VGG,CRAIGPB,0.3,positive,negative,negative,negative,negative,insignificant,negative,negative,insignificant,negative,negative,negative,negative,negative,negative, , , , , 
+celeba,VGG,GLISTERPB,0.05,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,insignificant-p2,negative,negative,insignificant-p2,negative, , , , , 
+celeba,VGG,GLISTERPB,0.1,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,insignificant-p2,negative,insignificant,insignificant-p2,insignificant, , , , , 
+celeba,VGG,GLISTERPB,0.2,positive,negative,negative,negative,negative,insignificant,negative,negative,insignificant,negative,insignificant-p2,negative,negative,insignificant-p2,negative, , , , , 
+celeba,VGG,GLISTERPB,0.3,positive,negative,negative,negative,negative,negative,negative,negative,negative,insignificant,insignificant-p2,negative,insignificant,insignificant-p2,negative, , , , , 
+celeba,VGG,GradMatchPB,0.05,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,insignificant-p2,negative,insignificant,insignificant-p2,positive, , , , , 
+celeba,VGG,GradMatchPB,0.1,positive,negative,negative,negative,negative,insignificant,negative,negative,negative,negative,insignificant-p2,negative,insignificant,insignificant,insignificant, , , , , 
+celeba,VGG,GradMatchPB,0.2,positive,negative,negative,negative,negative,insignificant-p2,negative,insignificant,insignificant,negative,insignificant,negative,negative,insignificant,insignificant, , , , , 
+celeba,VGG,GradMatchPB,0.3,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,insignificant-p2,negative,insignificant,insignificant-p2,insignificant, , , , , 
+fairface,ResNet18,CRAIGPB,0.05,positive,negative,negative,negative,negative, , , , , ,positive,insignificant,insignificant,positive,negative,positive,insignificant,insignificant,positive,negative
+fairface,ResNet18,CRAIGPB,0.1,positive,negative,negative,negative,negative, , , , , ,positive,insignificant,insignificant-p2,positive,negative,positive,insignificant,insignificant-p2,positive,negative
+fairface,ResNet18,CRAIGPB,0.2,positive,negative,negative,negative,negative, , , , , ,negative,negative,negative,negative,negative,insignificant-p2,insignificant,insignificant,insignificant-p2,negative
+fairface,ResNet18,CRAIGPB,0.3,positive,negative,negative,negative,negative, , , , , ,insignificant-p2,insignificant,insignificant-p2,positive,negative,negative,insignificant-p2,insignificant,negative,insignificant
+fairface,ResNet18,GLISTERPB,0.05,positive,negative,negative,negative,negative, , , , , ,positive,insignificant,insignificant,positive,negative,positive,insignificant,insignificant,positive,negative
+fairface,ResNet18,GLISTERPB,0.1,positive,negative,negative,negative,negative, , , , , ,insignificant-p2,negative,insignificant,positive,negative,insignificant-p2,insignificant-p2,insignificant-p2,insignificant-p2,negative
+fairface,ResNet18,GLISTERPB,0.2,positive,negative,negative,negative,negative, , , , , ,insignificant-p2,insignificant-p2,insignificant,insignificant-p2,insignificant,insignificant-p2,insignificant,insignificant,positive,insignificant
+fairface,ResNet18,GLISTERPB,0.3,positive,negative,negative,negative,negative, , , , , ,insignificant-p2,insignificant,insignificant,insignificant-p2,negative,insignificant,insignificant,insignificant,insignificant,negative
+fairface,ResNet18,GradMatchPB,0.05,positive,negative,negative,negative,negative, , , , , ,positive,insignificant-p2,insignificant-p2,positive,negative,positive,insignificant,insignificant,positive,negative
+fairface,ResNet18,GradMatchPB,0.1,positive,negative,negative,negative,negative, , , , , ,positive,insignificant,insignificant-p2,positive,negative,insignificant-p2,positive,insignificant-p2,positive,negative
+fairface,ResNet18,GradMatchPB,0.2,positive,negative,negative,negative,negative, , , , , ,insignificant-p2,insignificant-p2,insignificant-p2,positive,insignificant,insignificant,insignificant,negative,insignificant,insignificant
+fairface,ResNet18,GradMatchPB,0.3,positive,negative,negative,negative,negative, , , , , ,insignificant-p2,insignificant,insignificant,insignificant-p2,insignificant,insignificant-p2,positive,insignificant-p2,insignificant,insignificant
+fairface,VGG,CRAIGPB,0.05,positive,negative,negative,negative,negative, , , , , ,insignificant,negative,negative,insignificant,negative,insignificant,positive,insignificant,insignificant,negative
+fairface,VGG,CRAIGPB,0.1,positive,negative,negative,negative,negative, , , , , ,negative,negative,negative,negative,negative,insignificant,positive,insignificant-p2,insignificant,insignificant
+fairface,VGG,CRAIGPB,0.2,positive,negative,negative,negative,negative, , , , , ,insignificant,insignificant,negative,insignificant,insignificant,negative,positive,insignificant,insignificant,insignificant
+fairface,VGG,CRAIGPB,0.3,positive,negative,negative,negative,negative, , , , , ,insignificant-p2,insignificant-p2,insignificant,insignificant-p2,insignificant,negative,positive,insignificant-p2,negative,insignificant
+fairface,VGG,GLISTERPB,0.05,positive,negative,negative,negative,negative, , , , , ,insignificant,negative,negative,insignificant,negative,insignificant,positive,insignificant-p2,insignificant,negative
+fairface,VGG,GLISTERPB,0.1,positive,negative,negative,negative,negative, , , , , ,negative,negative,negative,negative,negative,insignificant,insignificant-p2,insignificant,insignificant,insignificant
+fairface,VGG,GLISTERPB,0.2,positive,negative,negative,negative,negative, , , , , ,negative,negative,negative,negative,insignificant,negative,positive,insignificant,negative,negative
+fairface,VGG,GLISTERPB,0.3,positive,negative,negative,negative,insignificant, , , , , ,negative,insignificant,negative,insignificant,insignificant,negative,positive,insignificant,negative,insignificant
+fairface,VGG,GradMatchPB,0.05,positive,negative,negative,negative,negative, , , , , ,insignificant,negative,negative,negative,negative,insignificant,positive,insignificant-p2,negative,negative
+fairface,VGG,GradMatchPB,0.1,positive,negative,negative,negative,negative, , , , , ,insignificant,negative,negative,insignificant,negative,negative,positive,insignificant,negative,insignificant
+fairface,VGG,GradMatchPB,0.2,positive,negative,negative,negative,negative, , , , , ,insignificant-p2,insignificant-p2,insignificant,insignificant-p2,insignificant,insignificant,positive,insignificant-p2,insignificant,insignificant
+fairface,VGG,GradMatchPB,0.3,positive,negative,negative,negative,negative, , , , , ,insignificant,negative,insignificant,insignificant,negative,negative,positive,insignificant-p2,negative,insignificant
+audiomnist,AudioLSTM,CRAIGPB,0.05,positive,negative,negative,negative,negative,insignificant,negative,negative,insignificant,negative,negative,negative,negative,negative,negative, , , , , 
+audiomnist,AudioLSTM,CRAIGPB,0.1,positive,negative,negative,negative,negative,insignificant,negative,negative,insignificant,negative,negative,negative,insignificant,negative,insignificant, , , , , 
+audiomnist,AudioLSTM,CRAIGPB,0.2,positive,negative,negative,negative,negative,insignificant-p2,positive,negative,positive,positive,negative,negative,negative,negative,negative, , , , , 
+audiomnist,AudioLSTM,CRAIGPB,0.3,positive,negative,negative,negative,negative,insignificant-p2,insignificant,negative,positive,insignificant,negative,negative,negative,negative,negative, , , , , 
+audiomnist,AudioLSTM,GLISTERPB,0.05,positive,negative,negative,negative,negative,positive,negative,negative,positive,negative,negative,negative,negative,negative,negative, , , , , 
+audiomnist,AudioLSTM,GLISTERPB,0.1,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,insignificant, , , , , 
+audiomnist,AudioLSTM,GLISTERPB,0.2,positive,negative,negative,negative,negative,positive,insignificant-p2,negative,positive,negative,negative,negative,insignificant,negative,negative, , , , , 
+audiomnist,AudioLSTM,GLISTERPB,0.3,positive,negative,negative,negative,negative,insignificant,negative,negative,insignificant,insignificant,negative,negative,insignificant,negative,negative, , , , , 
+audiomnist,AudioLSTM,GradMatchPB,0.05,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative, , , , , 
+audiomnist,AudioLSTM,GradMatchPB,0.1,positive,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,negative,insignificant,negative,negative, , , , , 
+audiomnist,AudioLSTM,GradMatchPB,0.2,positive,negative,negative,negative,negative,insignificant,negative,negative,insignificant,negative,negative,negative,insignificant,negative,insignificant, , , , , 
+audiomnist,AudioLSTM,GradMatchPB,0.3,positive,negative,negative,insignificant,negative,insignificant-p2,positive,insignificant,insignificant,positive,insignificant,negative,negative,insignificant,negative, , , , , 
+audiomnist,AudioCNN,CRAIGPB,0.05,positive,negative,negative,negative,negative,positive,negative,negative,positive,negative,insignificant,negative,negative,insignificant,negative, , , , , 
+audiomnist,AudioCNN,CRAIGPB,0.1,positive,negative,negative,negative,negative,insignificant,negative,negative,positive,negative,insignificant,negative,negative,insignificant,negative, , , , , 
+audiomnist,AudioCNN,CRAIGPB,0.2,positive,insignificant,insignificant,insignificant,negative,negative,negative,negative,negative,negative,insignificant-p2,negative,insignificant,insignificant-p2,negative, , , , , 
+audiomnist,AudioCNN,CRAIGPB,0.3,positive,positive,positive,positive,insignificant,negative,insignificant,insignificant,negative,positive,insignificant-p2,insignificant,insignificant,insignificant-p2,insignificant, , , , , 
+audiomnist,AudioCNN,GLISTERPB,0.05,positive,negative,negative,negative,negative,insignificant,negative,negative,positive,negative,negative,negative,negative,negative,negative, , , , , 
+audiomnist,AudioCNN,GLISTERPB,0.1,positive,negative,negative,negative,negative,insignificant,negative,negative,insignificant,negative,insignificant-p2,negative,negative,insignificant-p2,negative, , , , , 
+audiomnist,AudioCNN,GLISTERPB,0.2,positive,positive,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant,insignificant,negative,insignificant,negative, , , , , 
+audiomnist,AudioCNN,GLISTERPB,0.3,positive,positive,positive,positive,insignificant,negative,insignificant,insignificant,negative,positive,insignificant-p2,insignificant,insignificant-p2,insignificant-p2,insignificant, , , , , 
+audiomnist,AudioCNN,GradMatchPB,0.05,positive,negative,negative,negative,negative,positive,negative,negative,positive,negative,insignificant,negative,negative,insignificant,negative, , , , , 
+audiomnist,AudioCNN,GradMatchPB,0.1,positive,negative,negative,negative,negative,insignificant,negative,negative,insignificant,negative,insignificant-p2,negative,negative,insignificant-p2,negative, , , , , 
+audiomnist,AudioCNN,GradMatchPB,0.2,positive,insignificant,insignificant,insignificant,negative,insignificant,negative,negative,insignificant,negative,insignificant-p2,negative,negative,insignificant-p2,negative, , , , , 
+audiomnist,AudioCNN,GradMatchPB,0.3,positive,insignificant,insignificant,insignificant,positive,insignificant,insignificant,positive,insignificant,positive,insignificant,insignificant,insignificant,insignificant,insignificant, , , , , 
+voxceleb,AudioLSTM,CRAIGPB,0.05,positive,negative,negative,negative,negative, , , , , , , , , , ,positive,positive,negative,positive,positive
+voxceleb,AudioLSTM,CRAIGPB,0.1,positive,negative,negative,negative,negative, , , , , , , , , , ,insignificant,positive,negative,positive,positive
+voxceleb,AudioLSTM,CRAIGPB,0.2,positive,negative,negative,negative,negative, , , , , , , , , , ,insignificant,positive,negative,insignificant,positive
+voxceleb,AudioLSTM,CRAIGPB,0.3,positive,negative,negative,insignificant,negative, , , , , , , , , , ,insignificant,positive,insignificant,insignificant,insignificant-p2
+voxceleb,AudioLSTM,GLISTERPB,0.05,positive,negative,negative,negative,negative, , , , , , , , , , ,positive,positive,negative,positive,positive
+voxceleb,AudioLSTM,GLISTERPB,0.1,positive,negative,negative,negative,negative, , , , , , , , , , ,insignificant,positive,insignificant,insignificant,positive
+voxceleb,AudioLSTM,GLISTERPB,0.2,positive,negative,negative,negative,negative, , , , , , , , , , ,insignificant,insignificant-p2,negative,insignificant,insignificant-p2
+voxceleb,AudioLSTM,GLISTERPB,0.3,positive,negative,negative,negative,negative, , , , , , , , , , ,negative,insignificant-p2,positive,negative,insignificant-p2
+voxceleb,AudioLSTM,GradMatchPB,0.05,positive,negative,negative,negative,negative, , , , , , , , , , ,positive,positive,negative,positive,positive
+voxceleb,AudioLSTM,GradMatchPB,0.1,positive,negative,negative,negative,negative, , , , , , , , , , ,insignificant,positive,insignificant,insignificant,insignificant-p2
+voxceleb,AudioLSTM,GradMatchPB,0.2,positive,negative,negative,insignificant,negative, , , , , , , , , , ,negative,positive,positive,negative,insignificant-p2
+voxceleb,AudioLSTM,GradMatchPB,0.3,positive,negative,negative,negative,insignificant, , , , , , , , , , ,negative,insignificant,positive,negative,insignificant-p2
+voxceleb,AudioCNN,CRAIGPB,0.05,positive,negative,negative,negative,negative, , , , , , , , , , ,negative,positive,positive,negative,positive
+voxceleb,AudioCNN,CRAIGPB,0.1,positive,negative,negative,negative,negative, , , , , , , , , , ,negative,positive,positive,negative,positive
+voxceleb,AudioCNN,CRAIGPB,0.2,positive,negative,negative,negative,negative, , , , , , , , , , ,negative,positive,positive,negative,positive
+voxceleb,AudioCNN,CRAIGPB,0.3,positive,negative,negative,negative,negative, , , , , , , , , , ,negative,positive,positive,negative,positive
+voxceleb,AudioCNN,GLISTERPB,0.05,positive,negative,negative,negative,negative, , , , , , , , , , ,negative,positive,positive,negative,positive
+voxceleb,AudioCNN,GLISTERPB,0.1,positive,negative,negative,negative,negative, , , , , , , , , , ,negative,positive,positive,negative,positive
+voxceleb,AudioCNN,GLISTERPB,0.2,positive,negative,negative,negative,negative, , , , , , , , , , ,negative,positive,positive,negative,positive
+voxceleb,AudioCNN,GLISTERPB,0.3,positive,negative,negative,negative,negative, , , , , , , , , , ,insignificant,positive,positive,insignificant,positive
+voxceleb,AudioCNN,GradMatchPB,0.05,positive,negative,negative,negative,negative, , , , , , , , , , ,negative,positive,positive,negative,positive
+voxceleb,AudioCNN,GradMatchPB,0.1,positive,negative,negative,negative,negative, , , , , , , , , , ,negative,positive,positive,negative,positive
+voxceleb,AudioCNN,GradMatchPB,0.2,positive,negative,negative,negative,negative, , , , , , , , , , ,negative,positive,positive,negative,positive
+voxceleb,AudioCNN,GradMatchPB,0.3,positive,negative,negative,negative,negative, , , , , , , , , , ,insignificant,positive,insignificant,insignificant,positive

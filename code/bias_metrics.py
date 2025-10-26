@@ -25,7 +25,7 @@ def get_fair_metrics(dataset_target, dataset_pred, sensitive_att, dataframe, epo
         unprivileged_protected_attributes=0,
         df=dataset_target,
         protected_attribute_names=sensitive_att,
-        label_names=['labels']
+        label_names=['label']
     )
 
     dataset_pred = BinaryLabelDataset(
@@ -33,10 +33,10 @@ def get_fair_metrics(dataset_target, dataset_pred, sensitive_att, dataframe, epo
         unprivileged_protected_attributes=0,
         df=dataset_pred,
         protected_attribute_names=sensitive_att,
-        label_names=['labels']
+        label_names=['label']
     )
 
-    cols = ['SPD_age', 'EOD_age', 'AOD_age', 'DI_age', 'DiscIndex_age', 'SPD_gender', 'EOD_gender', 'AOD_gender', 'DI_gender', 'DiscIndex_gender', 'F1_score', 'Precision', 'Recall']
+    cols = ['SPD_age', 'EOD_age', 'AOD_age', 'DI_age', 'DiscIndex_age', 'SPD_gender', 'EOD_gender', 'AOD_gender', 'DI_gender', 'DiscIndex_gender', 'Accuracy', 'F1_score', 'Precision', 'Recall']
 
     attr = "age"
     idx = dataset_pred.protected_attribute_names.index(attr)
@@ -74,11 +74,12 @@ def get_fair_metrics(dataset_target, dataset_pred, sensitive_att, dataframe, epo
     discrimination_index_gender = abs(privileged_f1 - unprivileged_f1)
 
     # Calculate overall precision, recall, and F1 with zero-division check
+    accuracy = classified_metric_age.accuracy()
     precision = classified_metric_age.positive_predictive_value()
     recall = classified_metric_age.true_positive_rate()
     f1 = 2 * (precision * recall) / (precision + recall) if (precision + recall) != 0 else 0
 
-    row = pd.DataFrame([[metric_pred_age.mean_difference(), classified_metric_age.equal_opportunity_difference(), classified_metric_age.average_abs_odds_difference(), metric_pred_age.disparate_impact(), discrimination_index_age, metric_pred_gender.mean_difference(), classified_metric_gender.equal_opportunity_difference(), classified_metric_gender.average_abs_odds_difference(), metric_pred_gender.disparate_impact(), discrimination_index_gender, f1, precision, recall]], columns=cols, index=[epoch])
+    row = pd.DataFrame([[metric_pred_age.mean_difference(), classified_metric_age.equal_opportunity_difference(), classified_metric_age.average_abs_odds_difference(), metric_pred_age.disparate_impact(), discrimination_index_age, metric_pred_gender.mean_difference(), classified_metric_gender.equal_opportunity_difference(), classified_metric_gender.average_abs_odds_difference(), metric_pred_gender.disparate_impact(), discrimination_index_gender, accuracy, f1, precision, recall]], columns=cols, index=[epoch])
 
     dataframe = pd.concat([dataframe, row])
     dataframe = dataframe.replace([-np.inf, np.inf], 2)
@@ -547,7 +548,7 @@ def get_fair_metrics_fairface(dataset_target,dataset_pred, sensitive_att, datafr
         unprivileged_protected_attributes=0,
         df=dataset_target,
         protected_attribute_names=sensitive_att,  # names of sensitive attributes
-        label_names = ['labels']
+        label_names = ['label']
     )
 
 
@@ -556,10 +557,10 @@ def get_fair_metrics_fairface(dataset_target,dataset_pred, sensitive_att, datafr
         unprivileged_protected_attributes=0,
         df=dataset_pred,
         protected_attribute_names=sensitive_att,  # names of sensitive attributes
-        label_names = ['labels']
+        label_names = ['label']
     )
 
-    cols = ['SPD_age', 'EOD_age', 'AOD_age', 'DI_age', 'DcI_age', 'SPD_race', 'EOD_race', 'AOD_race', 'DI_race', 'DcI_race', 'F1_score', 'Precision', 'Recall']
+    cols = ['SPD_age', 'EOD_age', 'AOD_age', 'DI_age', 'DcI_age', 'SPD_race', 'EOD_race', 'AOD_race', 'DI_race', 'DcI_race', 'Accuracy', 'F1_score', 'Precision', 'Recall']
 
     attr = "age"
 
@@ -610,15 +611,274 @@ def get_fair_metrics_fairface(dataset_target,dataset_pred, sensitive_att, datafr
         unprivileged_f1 = 2 * (unprivileged_precision * unprivileged_recall) / (unprivileged_precision + unprivileged_recall)
     discrimination_index_race = abs(privileged_f1 - unprivileged_f1)
 
+    accuracy = classified_metric_age.accuracy() 
+
     precision = classified_metric_age.positive_predictive_value()
     recall = classified_metric_age.true_positive_rate()
     if precision + recall == 0:
         f1 = 0
     else :
         f1 = 2 * (precision * recall) / (precision + recall)
-    dataframe.loc[epoch] = [metric_pred_age.mean_difference(), classified_metric_age.equal_opportunity_difference(), classified_metric_age.average_abs_odds_difference(), metric_pred_age.disparate_impact(), discrimination_index_age, metric_pred_race.mean_difference(), classified_metric_race.equal_opportunity_difference(), classified_metric_race.average_abs_odds_difference(), metric_pred_race.disparate_impact(), discrimination_index_race, f1, precision, recall]
+    dataframe.loc[epoch] = [metric_pred_age.mean_difference(), classified_metric_age.equal_opportunity_difference(), classified_metric_age.average_abs_odds_difference(), metric_pred_age.disparate_impact(), discrimination_index_age, metric_pred_race.mean_difference(), classified_metric_race.equal_opportunity_difference(), classified_metric_race.average_abs_odds_difference(), metric_pred_race.disparate_impact(), discrimination_index_race, accuracy, f1, precision, recall]
 
     return dataframe
+
+
+#def get_fair_metrics_voxceleb(dataset_target,dataset_pred, sensitive_att, dataframe, epoch):
+#    """
+#    Measure fairness metrics.    
+#    Parameters: 
+#    dataset (pandas dataframe): Dataset
+#    pred (array): Model predictions
+#    pred_is_dataset, optional (bool): True if prediction is already part of the dataset, column name 'labels'.
+#    Returns:
+#    fair_metrics: Fairness metrics.
+#    """
+
+#    dataset = BinaryLabelDataset(
+#        privileged_protected_attributes=1,
+#        unprivileged_protected_attributes=0,
+#        df=dataset_target,
+#        protected_attribute_names=sensitive_att,  # names of sensitive attributes
+#        label_names = ['label']
+#    )
+
+
+#    dataset_pred = BinaryLabelDataset(
+#        privileged_protected_attributes=1,
+#        unprivileged_protected_attributes=0,
+#        df=dataset_pred,
+#        protected_attribute_names=sensitive_att,  # names of sensitive attributes
+#        label_names = ['label']
+#    )
+
+#    cols = ['SPD_race', 'EOD_race', 'AOD_race', 'DI_race', 'DcI_race', 'Accuracy', 'F1_score', 'Precision', 'Recall']
+
+
+#    attr = "race"
+#    idx = dataset_pred.protected_attribute_names.index(attr)
+
+#    privileged_groups =  [{attr:dataset_pred.privileged_protected_attributes[idx][0]}] 
+    
+#    unprivileged_groups = [{attr:dataset_pred.unprivileged_protected_attributes[idx][0]}] 
+#    classified_metric_race = ClassificationMetric(dataset, dataset_pred, unprivileged_groups=unprivileged_groups, privileged_groups=privileged_groups)
+#    metric_pred_race = BinaryLabelDatasetMetric(dataset_pred, unprivileged_groups=unprivileged_groups, privileged_groups=privileged_groups)
+
+#    privileged_precision = classified_metric_race.positive_predictive_value(privileged=True)
+#    privileged_recall = classified_metric_race.true_positive_rate(privileged=True)
+#    unprivileged_precision = classified_metric_race.positive_predictive_value(privileged=False)
+#    unprivileged_recall = classified_metric_race.true_positive_rate(privileged=False)
+#    if privileged_precision + privileged_recall == 0:
+#        privileged_f1 = 0
+#    else:
+#        privileged_f1 = 2 * (privileged_precision * privileged_recall) / (privileged_precision + privileged_recall)
+    
+#    if unprivileged_precision + unprivileged_recall == 0:
+#        unprivileged_f1 = 0
+#    else:
+#        unprivileged_f1 = 2 * (unprivileged_precision * unprivileged_recall) / (unprivileged_precision + unprivileged_recall)
+#    discrimination_index_race = abs(privileged_f1 - unprivileged_f1)
+
+#    accuracy = classified_metric_race.accuracy()
+#    precision = classified_metric_race.positive_predictive_value()
+#    recall = classified_metric_race.true_positive_rate()
+
+#    if precision + recall == 0:
+#        f1 = 0
+#    else:
+#        f1 = 2 * (precision * recall) / (precision + recall)
+    
+#    dataframe.loc[epoch] = [metric_pred_race.mean_difference(), classified_metric_race.equal_opportunity_difference(), classified_metric_race.average_abs_odds_difference(), metric_pred_race.disparate_impact(), discrimination_index_race, accuracy, f1, precision, recall]
+#    return dataframe
+
+
+def get_fair_metrics_voxceleb(dataset_target, dataset_pred, sensitive_att, dataframe, epoch):
+    """
+    Fairness metrics pour VoxCeleb (attribut sensible: 'race').
+    On attend des DataFrames avec colonnes:
+      - 'label'  (vraies étiquettes pour dataset_target, prédictions pour dataset_pred)
+      - 'race'   (0 = unprivileged, 1 = privileged, ou inverse selon ta config AIF360)
+    """
+    # AIF360 datasets (vrai / préd)
+    dataset = BinaryLabelDataset(
+        privileged_protected_attributes=1,
+        unprivileged_protected_attributes=0,
+        df=dataset_target,
+        protected_attribute_names=sensitive_att,   # ['race']
+        label_names=['label']
+    )
+    dataset_pred = BinaryLabelDataset(
+        privileged_protected_attributes=1,
+        unprivileged_protected_attributes=0,
+        df=dataset_pred,
+        protected_attribute_names=sensitive_att,   # ['race']
+        label_names=['label']
+    )
+
+    # Colonnes de sortie (cohérentes avec args.cols côté main)
+    cols = ['SPD_race', 'EOD_race', 'AOD_race', 'DI_race', 'DcI_race',
+            'Accuracy', 'F1_score', 'Precision', 'Recall']
+
+    # Groupes privilégiés / non privilégiés d'après 'race'
+    attr = 'race'
+    idx = dataset_pred.protected_attribute_names.index(attr)
+    privileged_groups   = [{attr: dataset_pred.privileged_protected_attributes[idx][0]}]
+    unprivileged_groups = [{attr: dataset_pred.unprivileged_protected_attributes[idx][0]}]
+
+    # Métriques AIF360
+    classified_metric = ClassificationMetric(
+        dataset, dataset_pred,
+        unprivileged_groups=unprivileged_groups,
+        privileged_groups=privileged_groups
+    )
+    metric_pred = BinaryLabelDatasetMetric(
+        dataset_pred,
+        unprivileged_groups=unprivileged_groups,
+        privileged_groups=privileged_groups
+    )
+
+    # Discrimination Index (écart F1 entre groupes)
+    p_prec = classified_metric.positive_predictive_value(privileged=True)
+    p_rec  = classified_metric.true_positive_rate(privileged=True)
+    u_prec = classified_metric.positive_predictive_value(privileged=False)
+    u_rec  = classified_metric.true_positive_rate(privileged=False)
+
+    priv_f1 = 0 if (p_prec + p_rec) == 0 else 2 * (p_prec * p_rec) / (p_prec + p_rec)
+    unpr_f1 = 0 if (u_prec + u_rec) == 0 else 2 * (u_prec * u_rec) / (u_prec + u_rec)
+    discrimination_index_race = abs(priv_f1 - unpr_f1)
+
+    # Qualité globale
+    accuracy  = classified_metric.accuracy()
+    precision = classified_metric.positive_predictive_value()
+    recall    = classified_metric.true_positive_rate()
+    f1        = 0 if (precision + recall) == 0 else 2 * (precision * recall) / (precision + recall)
+
+    # Ligne résultat
+    row = pd.DataFrame([[
+        metric_pred.mean_difference(),
+        classified_metric.equal_opportunity_difference(),
+        classified_metric.average_abs_odds_difference(),
+        metric_pred.disparate_impact(),
+        discrimination_index_race,
+        accuracy, f1, precision, recall
+    ]], columns=cols, index=[epoch])
+
+    # Accumulation + nettoyage valeurs extrêmes
+    dataframe = pd.concat([dataframe, row])
+    dataframe = dataframe.replace([-np.inf, np.inf], 2)
+    return dataframe
+
+
+def get_fair_metrics_audioMNIST(dataset_target, dataset_pred, sensitive_att, dataframe, epoch):
+    """
+    Fairness metrics pour audioMNIST (attributs sensibles : 'age' et 'gender').
+
+    On attend des DataFrames avec colonnes :
+      - 'label'  (vraies étiquettes pour dataset_target, prédictions pour dataset_pred)
+      - 'age'    (0 = unprivileged, 1 = privileged)
+      - 'gender' (0 = unprivileged, 1 = privileged)
+    """
+    # AIF360 datasets (vrai / préd)
+    dataset = BinaryLabelDataset(
+        privileged_protected_attributes=1,
+        unprivileged_protected_attributes=0,
+        df=dataset_target,
+        protected_attribute_names=sensitive_att,   # ['age', 'gender']
+        label_names=['label']
+    )
+    dataset_pred = BinaryLabelDataset(
+        privileged_protected_attributes=1,
+        unprivileged_protected_attributes=0,
+        df=dataset_pred,
+        protected_attribute_names=sensitive_att,   # ['age', 'gender']
+        label_names=['label']
+    )
+
+    # Colonnes de sortie
+    cols = ['SPD_age', 'EOD_age', 'AOD_age', 'DI_age', 'DcI_age',
+            'SPD_gender', 'EOD_gender', 'AOD_gender', 'DI_gender', 'DcI_gender',
+            'Accuracy', 'F1_score', 'Precision', 'Recall']
+
+    # === Bloc AGE ===
+    attr = "age"
+    idx = dataset_pred.protected_attribute_names.index(attr)
+    privileged_groups   = [{attr: dataset_pred.privileged_protected_attributes[idx][0]}]
+    unprivileged_groups = [{attr: dataset_pred.unprivileged_protected_attributes[idx][0]}]
+
+    classified_metric_age = ClassificationMetric(
+        dataset, dataset_pred,
+        unprivileged_groups=unprivileged_groups,
+        privileged_groups=privileged_groups
+    )
+    metric_pred_age = BinaryLabelDatasetMetric(
+        dataset_pred,
+        unprivileged_groups=unprivileged_groups,
+        privileged_groups=privileged_groups
+    )
+
+    p_prec = classified_metric_age.positive_predictive_value(privileged=True)
+    p_rec  = classified_metric_age.true_positive_rate(privileged=True)
+    u_prec = classified_metric_age.positive_predictive_value(privileged=False)
+    u_rec  = classified_metric_age.true_positive_rate(privileged=False)
+
+    priv_f1_age = 0 if (p_prec + p_rec) == 0 else 2 * (p_prec * p_rec) / (p_prec + p_rec)
+    unpr_f1_age = 0 if (u_prec + u_rec) == 0 else 2 * (u_prec * u_rec) / (u_prec + u_rec)
+    disc_index_age = abs(priv_f1_age - unpr_f1_age)
+
+    # === Bloc GENDER ===
+    attr = "gender"
+    idx = dataset_pred.protected_attribute_names.index(attr)
+    privileged_groups   = [{attr: dataset_pred.privileged_protected_attributes[idx][0]}]
+    unprivileged_groups = [{attr: dataset_pred.unprivileged_protected_attributes[idx][0]}]
+
+    classified_metric_gender = ClassificationMetric(
+        dataset, dataset_pred,
+        unprivileged_groups=unprivileged_groups,
+        privileged_groups=privileged_groups
+    )
+    metric_pred_gender = BinaryLabelDatasetMetric(
+        dataset_pred,
+        unprivileged_groups=unprivileged_groups,
+        privileged_groups=privileged_groups
+    )
+
+    p_prec = classified_metric_gender.positive_predictive_value(privileged=True)
+    p_rec  = classified_metric_gender.true_positive_rate(privileged=True)
+    u_prec = classified_metric_gender.positive_predictive_value(privileged=False)
+    u_rec  = classified_metric_gender.true_positive_rate(privileged=False)
+
+    priv_f1_gender = 0 if (p_prec + p_rec) == 0 else 2 * (p_prec * p_rec) / (p_prec + p_rec)
+    unpr_f1_gender = 0 if (u_prec + u_rec) == 0 else 2 * (u_prec * u_rec) / (u_prec + u_rec)
+    disc_index_gender = abs(priv_f1_gender - unpr_f1_gender)
+
+    # === Qualité globale (peu importe l'attribut, c'est identique) ===
+    accuracy  = classified_metric_age.accuracy()
+    precision = classified_metric_age.positive_predictive_value()
+    recall    = classified_metric_age.true_positive_rate()
+    f1        = 0 if (precision + recall) == 0 else 2 * (precision * recall) / (precision + recall)
+
+    # === Ajout de la ligne ===
+    row = pd.DataFrame([[
+        metric_pred_age.mean_difference(),
+        classified_metric_age.equal_opportunity_difference(),
+        classified_metric_age.average_abs_odds_difference(),
+        metric_pred_age.disparate_impact(),
+        disc_index_age,
+
+        metric_pred_gender.mean_difference(),
+        classified_metric_gender.equal_opportunity_difference(),
+        classified_metric_gender.average_abs_odds_difference(),
+        metric_pred_gender.disparate_impact(),
+        disc_index_gender,
+
+        accuracy, f1, precision, recall
+    ]], columns=cols, index=[epoch])
+
+    dataframe = pd.concat([dataframe, row])
+    dataframe = dataframe.replace([-np.inf, np.inf], 2)
+    return dataframe
+
+
 
 def num_pos(y_test):
     """

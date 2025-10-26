@@ -4,14 +4,19 @@ import os
 from dataselection.utils.data.datasets.SL.custom_dataset_selcon import CustomDataset_WithId_SELCON
 import torch
 import torchvision
+import torchaudio
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from torch.utils.data import Dataset, random_split, TensorDataset
 from torchvision import transforms
 import PIL.Image as Image
+from os.path import join
 
-
+from torch.nn import functional as F
+from torchaudio.transforms import Resample
+import soundfile as sf 
+import librosa 
 from dataselection.utils.data.data_utils import *
 import re
 import pandas as pd
@@ -20,9 +25,17 @@ import pickle
 from ..__utils import TinyImageNet
 from dataselection.utils.data.data_utils import WeightedSubset
 import pandas as pd
-from datasets import load_dataset
 from dataselection.utils.data.datasets.SL.color_mnist import ColoredDataset
 from dataselection.utils.data.datasets.SL.celeba_loader import MyImageDataset, celeba
+
+import os, random, hashlib
+import numpy as np
+import pandas as pd
+import soundfile as sf
+import librosa
+import torch
+from torch.utils.data import Dataset
+
 
 LABEL_MAPPINGS = {'glue_sst2':'label', 
                   'hf_trec6':'coarse_label', 
@@ -325,8 +338,41 @@ class dcDataset(Dataset):
         sa = np.array([sample_data[9], sample_data[10]])
         return sample_data, label, sa
 
+
+class CelebaDataset(Dataset) : 
+    def __init__ (self, img_folder, df_path) : 
+        self.img_folder = img_folder
+        df = pd.read_csv(df_path) 
+        self.labels = df["label"].tolist()
+        self.filenames = df["filename"].tolist()
+        self.ages = df["age"].tolist()
+        self.genders = df["gender"].tolist() 
+        self.n = len(self.labels) 
+    
+
+    def __len__ (self) : 
+        return self.n 
+    
+
+    def __getitem__ (self, idx) :
+        img_path = os.path.join(self.img_folder, self.filenames[idx])
+        img = Image.open(img_path).convert('RGB') 
+
+        img = torchvision.transforms.ToTensor()(img)
+
+        # Normalize the image
+        img = torchvision.transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))(img)
+
+        sa = np.array([self.ages[idx], self.genders[idx]])
+
+        label = self.labels[idx]
+
+        return img, torch.tensor(label), torch.tensor(sa)
+
+
+
 class fairfaceDataset(Dataset) :
-    def __init__(self, dataframe, transform=None, datadir = "../data/fairface/"):
+    def __init__(self, dataframe, transform=None, datadir=""):
         """
         Args:
             dataframe (pd.DataFrame): DataFrame containing the image paths and labels.
@@ -377,13 +423,72 @@ class fairfaceDataset(Dataset) :
         
         sa = np.array([age, race])
         # Load the image
-        image = Image.open(self.datadir + img_path)
+        image = Image.open(join(self.datadir, img_path))
         
         # Apply transformations, if any
         if self.transform:
             image = self.transform(image)
         
-        return image, gender, sa
+        return image, torch.tensor(gender), torch.tensor(sa)
+
+
+def stereo_to_mono_convertor(signal):
+    # If there is more than 1 channel in your audio
+    if signal.shape[0] > 1:
+        # Do a mean of all channels and keep it in one channel
+        signal = torch.mean(signal, dim=0, keepdim=True)
+    return signal
+
+
+class VoxCelebDataset(Dataset) : 
+    def __init__ (self, dataframe, file_path):
+        self.file_path = file_path
+        self.path_list = dataframe.iloc[:, 0].values
+        self.gender_list = dataframe.iloc[:, 2].values
+        self.race_list = dataframe.iloc[:, 3].values
+        self.dataset_size = len(self.path_list)
+        self.transform = torchaudio.transforms.Spectrogram(n_fft=1022, win_length=512)
+
+        self.sample_rate = 16000
+        self.sample_size = int(16000*4.79)
+    
+
+    def __len__(self):
+        """Return the number of samples in the dataset."""
+        return self.dataset_size
+    
+
+    def pad_waveform (self, waveform) :
+        num_samples = waveform.size(1) 
+        if self.sample_size < num_samples : 
+            return waveform[:,:self.sample_size]
+        else : 
+            amount = self.sample_size - num_samples
+            waveform = F.pad(waveform, (0, amount))
+            return waveform 
+
+
+    def __getitem__(self, idx):
+        wav_path = join(self.file_path, self.path_list[idx])
+
+        gender = self.gender_list[idx] 
+        race = self.race_list[idx]
+        
+        sa = np.array([race])
+
+        # Load the wav
+        waveform, sample_rate = torchaudio.load(wav_path)
+
+        resample = torchaudio.transforms.Resample(sample_rate, self.sample_rate)
+
+        resampled_waveform = resample(waveform)
+        
+        padded_waveform = self.pad_waveform(resampled_waveform)
+
+        spectrogram = self.transform(padded_waveform)
+
+        return spectrogram, torch.tensor(gender), torch.tensor(sa)
+
 
 
 class CustomDataset_WithId(Dataset):
@@ -659,6 +764,8 @@ def tokenize_function(tokenizer, example, text_column):
 def load_dataset(datadir, train_file, test_file, val_file, dset_name, isnumpy=False, **kwargs):
     num_cls = 2
     num_cls_mnist = 10
+    num_cls_celeba = 2
+    num_cls_fairface = 2
     fullset, valset, testset = None, None, None
 
     #### MobiAct
@@ -907,6 +1014,670 @@ def load_dataset(datadir, train_file, test_file, val_file, dset_name, isnumpy=Fa
          return fullset, valset, testset, num_cls_mnist
 
 
+    elif dset_name == "load-celeba2" :
+        train_dir = os.path.join(datadir, 'celeba', train_file)
+        val_dir = os.path.join(datadir, 'celeba', val_file)
+        test_dir = os.path.join(datadir, 'celeba', test_file)
+
+
+        train_data = CelebaDataset(train_dir, os.path.join(train_dir, "labels.csv"))
+        val_data = CelebaDataset(val_dir, os.path.join(val_dir, "labels.csv"))
+        test_data = CelebaDataset(test_dir, os.path.join(test_dir, "labels.csv"))
+
+        return train_data, val_data, test_data, num_cls
+    
+
+    elif dset_name == "load-celeba":
+        print("IN LOAD CELEBA ///////") 
+        # Paths to the directories where images are stored
+        train_dir = os.path.join(datadir, 'celeba', train_file)
+        val_dir = os.path.join(datadir, 'celeba', val_file)
+        test_dir = os.path.join(datadir, 'celeba', test_file)
+
+        # Load the metadata (CSV files containing labels and image paths)
+        train_metadata = pd.read_csv(os.path.join(train_dir, 'labels.csv'))
+        val_metadata = pd.read_csv(os.path.join(val_dir, 'labels.csv'))
+        test_metadata = pd.read_csv(os.path.join(test_dir, 'labels.csv'))
+
+         # Create datasets using the metadata, including the sensitive attribute (flag)
+        def create_dataset_from_metadata(metadata, image_dir):
+            images = []
+            labels = metadata['label'].values
+            sensitive_attributes = metadata[['age', 'gender']].values
+
+            for idx, row in metadata.iterrows():
+                img_path = os.path.join(image_dir, row['filename'])
+
+                img = Image.open(img_path).convert('RGB') 
+
+                img = torchvision.transforms.ToTensor()(img)
+
+                # Normalize the image
+                img = torchvision.transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))(img)
+
+                images.append(img)
+
+            # Convert images, labels, and sensitive attributes into tensor
+            images_tensor = torch.stack(images)
+            labels_tensor = torch.tensor(labels)
+            sensitive_tensor = torch.tensor(sensitive_attributes)
+
+            # Return as a dataset
+            return torch.utils.data.TensorDataset(images_tensor, labels_tensor, sensitive_tensor)
+
+        # Load the fullset, valset, and testset
+        fullset = create_dataset_from_metadata(train_metadata, train_dir)
+        valset = create_dataset_from_metadata(val_metadata, val_dir)
+        testset = create_dataset_from_metadata(test_metadata, test_dir)
+
+        # If class imbalance is specified, handle it here based on metadata
+        if kwargs.get('feature') == 'classimb':
+            rng = np.random.default_rng(kwargs.get('seed', None))
+            samples_per_class = torch.zeros(num_cls_celeba)
+            for i in range(num_cls_celeba):
+                samples_per_class[i] = len(torch.where(torch.tensor([label for _, label in train_metadata.iterrows()]) == i)[0])
+            min_samples = int(torch.min(samples_per_class) * 0.1)
+            selected_classes = rng.choice(np.arange(num_cls_celeba), size=int(kwargs['classimb_ratio'] * num_cls_celeba), replace=False)
+            subset_idxs = []
+            for i in range(num_cls_mnist):
+                if i in selected_classes:
+                    batch_subset_idxs = list(rng.choice(torch.where(torch.tensor([label for _, label in train_metadata.iterrows()]) == i)[0].cpu().numpy(), size=min_samples, replace=False))
+                else:
+                    batch_subset_idxs = list(torch.where(torch.tensor([label for _, label in train_metadata.iterrows()]) == i)[0].cpu().numpy())
+                subset_idxs.extend(batch_subset_idxs)
+            fullset = torch.utils.data.Subset(fullset, subset_idxs)
+
+        return fullset, valset, testset, num_cls_celeba
+
+
+    elif dset_name == "load-fairface":
+        print("IN LOAD FAIRFACE ///////") 
+        # Paths to the directories where images are stored
+        directory = os.path.join(datadir, 'fairface')
+
+        # Load the metadata (CSV files containing labels and image paths)
+        train_metadata = pd.read_csv(os.path.join(directory, train_file))
+        val_metadata = pd.read_csv(os.path.join(directory, val_file))
+        test_metadata = pd.read_csv(os.path.join(directory, test_file))
+        
+        def create_dataset_from_metadata(metadata, image_dir):
+            
+            images = []
+            metadata['gender'] = metadata['gender'].apply(lambda x : 1 if x == "Female" else 0)
+            metadata['age'] = metadata['age'].apply(lambda x : 1 if x in ["40-49", "50-59", "60-69", "0-2"] else 0)
+            metadata['race'] = metadata['race'].apply(lambda x : 1 if x in ["Middle Eastern"] else 0)
+
+            sensitive_attributes = metadata[['age', 'race']].values
+            labels = metadata['gender'].values  
+            
+            for idx, row in metadata.iterrows():
+                img_path = os.path.join(image_dir, "processed", row['file'])
+
+                img = Image.open(img_path).convert('RGB') 
+
+                img = torchvision.transforms.ToTensor()(img)
+
+                # Normalize the image
+                img = torchvision.transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))(img)
+
+                images.append(img) 
+
+            # Convert images, labels, and sensitive attributes into tensor
+            images_tensor = torch.stack(images)
+            labels_tensor = torch.tensor(labels)
+            sensitive_tensor = torch.tensor(sensitive_attributes)
+
+            # Return as a dataset
+            return torch.utils.data.TensorDataset(images_tensor, labels_tensor, sensitive_tensor)
+        print("please") 
+        # Load the fullset, valset, and testset
+        fullset = create_dataset_from_metadata(train_metadata, directory)
+        valset = create_dataset_from_metadata(val_metadata, directory)
+        testset = create_dataset_from_metadata(test_metadata, directory)
+
+
+        # If class imbalance is specified, handle it here based on metadata
+        if kwargs.get('feature') == 'classimb':
+            rng = np.random.default_rng(kwargs.get('seed', None))
+            samples_per_class = torch.zeros(num_cls_celeba)
+            for i in range(num_cls_celeba):
+                samples_per_class[i] = len(torch.where(torch.tensor([label for _, label in train_metadata.iterrows()]) == i)[0])
+            min_samples = int(torch.min(samples_per_class) * 0.1)
+            selected_classes = rng.choice(np.arange(num_cls_celeba), size=int(kwargs['classimb_ratio'] * num_cls_celeba), replace=False)
+            subset_idxs = []
+            for i in range(num_cls_mnist):
+                if i in selected_classes:
+                    batch_subset_idxs = list(rng.choice(torch.where(torch.tensor([label for _, label in train_metadata.iterrows()]) == i)[0].cpu().numpy(), size=min_samples, replace=False))
+                else:
+                    batch_subset_idxs = list(torch.where(torch.tensor([label for _, label in train_metadata.iterrows()]) == i)[0].cpu().numpy())
+                subset_idxs.extend(batch_subset_idxs)
+            fullset = torch.utils.data.Subset(fullset, subset_idxs)
+
+        return fullset, valset, testset, num_cls
+    
+
+    #elif dset_name == "load-voxceleb" :
+
+    #    path = join(datadir, 'VoxCeleb')
+    #    label_train = pd.read_csv(join(datadir, 'balanced_dev.csv'))
+    #    label_test = pd.read_csv(join(datadir, 'balanced_test.csv'))
+    #    label_val = pd.read_csv(join(datadir, 'balanced_test.csv'))
+
+    #    def pad_waveform (waveform, sample_size) :
+    #        num_samples = waveform.size(1) 
+    #        if sample_size < num_samples : 
+    #            return waveform[:,:sample_size]
+    #        else : 
+    #            amount = sample_size - num_samples
+    #            waveform = F.pad(waveform, (0, amount))
+    #            return waveform 
+
+
+    #elif dset_name == "load-voxceleb2" : 
+    #    path = join(datadir, 'VoxCeleb')
+    #    label_train = pd.read_csv(join(datadir, 'dev_metadata.csv'), nrows=4000)
+    #    label_test = pd.read_csv(join(datadir, 'test_metadata.csv'), nrows=1000)
+    #    label_val = pd.read_csv(join(datadir, 'val_metadata.csv'), nrows=1000)
+
+
+    #    def create_dataset_from_metadata (metadata, data_path) : 
+    #        path_list = metadata.iloc[:, 0].values
+    #        label_list = metadata.iloc[:, 2].values
+    #        race_list = metadata.iloc[:, 3].values
+    #        dataset_size = len(label_list) 
+    #        sample_rate = 16000 
+    #        duration = int(sample_rate*3)
+
+
+    #        signal_list = []
+    #        for i in range (dataset_size) :
+    #            wav_path = join(data_path, path_list[i])
+    #            waveform, sr = torchaudio.load(wav_path) 
+    #            waveform = waveform[:,:duration]
+    #            signal_list.append(waveform)
+
+    #        signal_tensor = torch.stack(signal_list).squeeze(1) 
+    #        labels_tensor = torch.tensor(label_list) 
+    #        sa_tensor = torch.tensor(race_list).unsqueeze(1)
+
+    #        print(signal_tensor.size(), labels_tensor.size(), sa_tensor.size())
+
+    #        return torch.utils.data.TensorDataset(signal_tensor, labels_tensor, sa_tensor)
+
+
+    #    trainset = create_dataset_from_metadata(label_train, join(datadir, "dev")) 
+    #    valset = create_dataset_from_metadata(label_val, join(datadir, "dev")) 
+    #    testset = create_dataset_from_metadata(label_test, join(datadir, "test")) 
+
+
+    #    return trainset, valset, testset, 2
+
+    #celebvox dataset
+
+
+    #elif dset_name == "load-celebvox":
+    #    """
+    #    Attend :
+    #      - datadir/
+    #          meta_train.csv, meta_val.csv, meta_test.csv
+    #          train_wavdata/, val_wavdata/, test_wavdata/
+    #    CSV colonnes : filepath, speaker, label, race
+    #      - filepath : chemin relatif sous le dossier *_wavdata (ex: id10443/.../00011.wav)
+    #      - label   : 0/1 (cible, p.ex. genre)
+    #      - race    : 0/1 (attribut sensible)
+    #    Retourne 3 Dataset torch : (x, y, sa) où sa[:,0] = race
+    #    """
+    #    import torchaudio
+    #    from torch.nn import functional as F
+
+        # chemins CSV
+    #    tr_csv = os.path.join(datadir, train_file)
+    #    va_csv = os.path.join(datadir, val_file)
+    #    te_csv = os.path.join(datadir, test_file)
+    #    assert os.path.exists(tr_csv), f"[load-celebvox-csv] Introuvable: {tr_csv}"
+    #    assert os.path.exists(va_csv), f"[load-celebvox-csv] Introuvable: {va_csv}"
+    #    assert os.path.exists(te_csv), f"[load-celebvox-csv] Introuvable: {te_csv}"
+
+        # dossiers WAV
+    #    tr_root = os.path.join(datadir, "train_wavdata")
+    #    va_root = os.path.join(datadir, "val_wavdata")
+    #    te_root = os.path.join(datadir, "test_wavdata")
+    #    for r in [tr_root, va_root, te_root]:
+    #        assert os.path.isdir(r), f"[load-celebvox-csv] Dossier WAV introuvable: {r}"
+
+        # dataset local
+    #    class CelebVoxCsvDataset(Dataset):
+    #        def __init__(self, csv_path, wav_root, sample_rate=16000, seconds=4.79):
+    #           df = pd.read_csv(csv_path)
+                # colonnes attendues
+    #            for col in ["filepath", "label", "race"]:
+    #                if col not in df.columns:
+    #                    raise ValueError(f"[load-celebvox-csv] Colonne '{col}' absente dans {csv_path}")
+    #            self.paths  = df["filepath"].astype(str).tolist()
+    #            self.labels = df["label"].astype(int).tolist()
+    #            self.races  = df["race"].astype(int).tolist()
+    #            self.root   = wav_root
+    #            self.sr     = sample_rate
+    #            self.n_samp = int(sample_rate * seconds)
+    #            self.spec   = torchaudio.transforms.Spectrogram(n_fft=1022, win_length=512)
+
+    #        def __len__(self):
+    #            return len(self.labels)
+
+    #        def _pad_or_crop(self, wav: torch.Tensor) -> torch.Tensor:
+                # wav: [1, T] ou [C, T]
+    #            if wav.dim() == 2 and wav.size(0) > 1:
+    #                wav = wav.mean(dim=0, keepdim=True)  # mono
+    #            if wav.dim() == 1:
+    #                wav = wav.unsqueeze(0)
+    #            T = wav.size(1)
+    #            if T == self.n_samp:
+    #                return wav
+    #            if T > self.n_samp:
+    #                start = (T - self.n_samp) // 2
+    #                return wav[:, start:start+self.n_samp]
+                # pad
+    #            pad = self.n_samp - T
+    #            return F.pad(wav, (0, pad))
+
+    #        def __getitem__(self, idx):
+    #            rel = self.paths[idx]
+    #            y   = int(self.labels[idx])
+    #            r   = int(self.races[idx])
+    #            full = os.path.join(self.root, rel)
+    #            wav, sr0 = torchaudio.load(full)
+    #            if sr0 != self.sr:
+    #                wav = torchaudio.transforms.Resample(sr0, self.sr)(wav)
+    #            wav = self._pad_or_crop(wav)
+    #            S = self.spec(wav)      # [1, F, T]
+    #            S = torch.log(S + 1e-6) # log-power
+    #            label = torch.tensor(y, dtype=torch.long)
+    #            sa    = torch.tensor([r], dtype=torch.long)  # shape [1] -> sa[:,0] = race
+    #            return S, label, sa
+
+    #    trainset = CelebVoxCsvDataset(tr_csv, tr_root)
+    #    valset   = CelebVoxCsvDataset(va_csv, va_root)
+    #    testset  = CelebVoxCsvDataset(te_csv, te_root)
+    #    num_cls  = 2
+    #    return trainset, valset, testset, num_cls
+
+    elif dset_name == "load-celebvox":
+        """
+        Attend :
+          - datadir/
+              meta_train.csv, meta_val.csv, meta_test.csv
+              train_wavdata/, val_wavdata/, test_wavdata/
+        CSV colonnes : filepath, speaker, label, race
+          - filepath : chemin relatif sous le dossier *_wavdata (ex: id10443/.../00011.wav)
+          - label   : 0/1 (cible, p.ex. genre)
+          - race    : 0/1 (attribut sensible)
+        Retourne 3 Dataset torch : (x, y, sa) où sa[:,0] = race
+        """
+        import numpy as np
+        import pandas as pd
+        import soundfile as sf
+        import librosa
+        import torch
+        from torch.utils.data import Dataset
+
+        # -----------------------------
+        # Fonctions de features (alignées sur ton script)
+        # -----------------------------
+        def center_crop_or_pad(y: np.ndarray, target_len: int) -> np.ndarray:
+            n = y.shape[-1]
+            if n == target_len:
+                return y
+            if n > target_len:
+                start = (n - target_len) // 2
+                return y[start:start + target_len]
+            # pad réfléchi pour stabilité
+            pad_left = (target_len - n) // 2
+            pad_right = target_len - n - pad_left
+            return np.pad(y, (pad_left, pad_right), mode="reflect")
+
+        def compute_logmel(
+            y: np.ndarray, sr: int,
+            n_fft: int = 400, hop: int = 160, win: int = 400, n_mels: int = 64
+        ) -> np.ndarray:
+            S = librosa.feature.melspectrogram(
+                y=y, sr=sr, n_fft=n_fft, hop_length=hop, win_length=win,
+                n_mels=n_mels, power=2.0, center=False
+            )
+            return np.log(S + 1e-6)  # [n_mels, T]
+
+        def cmvn_utterance(feat: np.ndarray, axis: int = -1, eps: float = 1e-9) -> np.ndarray:
+            mean = feat.mean(axis=axis, keepdims=True)
+            std = feat.std(axis=axis, keepdims=True)
+            return (feat - mean) / (std + eps)
+
+        # chemins CSV
+        tr_csv = os.path.join(datadir, train_file)
+        va_csv = os.path.join(datadir, val_file)
+        te_csv = os.path.join(datadir, test_file)
+        assert os.path.exists(tr_csv), f"[load-celebvox-csv] Introuvable: {tr_csv}"
+        assert os.path.exists(va_csv), f"[load-celebvox-csv] Introuvable: {va_csv}"
+        assert os.path.exists(te_csv), f"[load-celebvox-csv] Introuvable: {te_csv}"
+
+        # dossiers WAV
+        tr_root = os.path.join(datadir, "train_wavdata")
+        va_root = os.path.join(datadir, "val_wavdata")
+        te_root = os.path.join(datadir, "test_wavdata")
+        for r in [tr_root, va_root, te_root]:
+            assert os.path.isdir(r), f"[load-celebvox-csv] Dossier WAV introuvable: {r}"
+
+        # dataset local (prétraitement = script librosa)
+        class CelebVoxCsvDataset(Dataset):
+            def __init__(
+                self,
+                csv_path: str,
+                wav_root: str,
+                sample_rate: int = 16000,
+                seconds: float = 2.0,
+                n_mels: int = 64,
+                n_fft: int = 400,
+                hop: int = 160,
+                win: int = 400,
+                cache_test_in_ram: bool = False,
+            ):
+                df = pd.read_csv(csv_path)
+                for col in ["filepath", "label", "race"]:
+                    if col not in df.columns:
+                        raise ValueError(f"[load-celebvox-csv] Colonne '{col}' absente dans {csv_path}")
+                self.paths  = df["filepath"].astype(str).tolist()
+                self.labels = df["label"].astype(int).tolist()
+                self.races  = df["race"].astype(int).tolist()
+                self.root   = os.path.abspath(wav_root)
+                self.sr     = int(sample_rate)
+                self.n_samp = int(round(sample_rate * float(seconds)))
+                self.n_mels = int(n_mels)
+                self.n_fft  = int(n_fft)
+                self.hop    = int(hop)
+                self.win    = int(win)
+
+                # Cache optionnel (utile pour val/test)
+                self.cache_ok = bool(cache_test_in_ram)
+                self._cache = {}
+
+            def __len__(self):
+                return len(self.labels)
+
+            def _load_mono(self, full_path: str) -> np.ndarray:
+                y, orig_sr = sf.read(full_path, dtype="float32", always_2d=False)
+                if y.ndim == 2:
+                    y = y.mean(axis=1)
+                if orig_sr != self.sr:
+                    y = librosa.resample(y=y, orig_sr=orig_sr, target_sr=self.sr, res_type="kaiser_fast")
+                y = center_crop_or_pad(y, self.n_samp)
+                return y
+
+            def _key(self, rel_path: str) -> str:
+                return f"{self.sr}|{self.n_samp}|{self.n_mels}|{self.n_fft}|{self.hop}|{self.win}|{rel_path}"
+
+            def __getitem__(self, idx):
+                rel = self.paths[idx]
+                y_lab = int(self.labels[idx])
+                r_sa  = int(self.races[idx])
+                full = os.path.join(self.root, rel)
+
+                key = self._key(rel)
+                if self.cache_ok and key in self._cache:
+                    x = self._cache[key]
+                else:
+                    wav = self._load_mono(full)
+                    feat = compute_logmel(
+                        wav, self.sr,
+                        n_fft=self.n_fft, hop=self.hop, win=self.win, n_mels=self.n_mels
+                    )                                 # [M, T]
+                    feat = cmvn_utterance(feat, axis=-1)  # CMVN par-utterance
+                    x = torch.from_numpy(feat).unsqueeze(0).to(torch.float32)  # [1, M, T]
+                    if self.cache_ok:
+                        self._cache[key] = x
+
+                label = torch.tensor(y_lab, dtype=torch.long)
+                sa    = torch.tensor([r_sa], dtype=torch.long)  # shape [1] -> sa[:,0] = race
+                return x, label, sa
+
+        # seconds=2.0 et n_mels=64 comme dans le script (modifiable ici si besoin)
+        trainset = CelebVoxCsvDataset(tr_csv, tr_root, sample_rate=16000, seconds=2.0, n_mels=64, cache_test_in_ram=False)
+        valset   = CelebVoxCsvDataset(va_csv, va_root, sample_rate=16000, seconds=2.0, n_mels=64, cache_test_in_ram=True)
+        testset  = CelebVoxCsvDataset(te_csv, te_root, sample_rate=16000, seconds=2.0, n_mels=64, cache_test_in_ram=True)
+
+        num_cls  = 2
+        return trainset, valset, testset, num_cls
+
+
+
+    elif dset_name == "load-audiomnist":
+        """
+        Attend :
+          - datadir/  (racine des fichiers audio, ex: .../AudioMNIST/data)
+          - CSV de split (train/val/test) passés via train_file, val_file, test_file
+            Colonnes requises : path, label, gender, et age_bin (ou à défaut age)
+            - path : chemin RELATIF sous datadir (ex: "01/0_01_0.wav")
+           - label : 0/1 (pair/impair)
+            - gender : 0/1 (male=1, female=0)   <-- conservé tel quel
+            - age_bin : 0/1 (si présent, prioritaire)
+        Retourne 3 Dataset torch : (x, y, sa) où sa = [age, gender]   <-- ordre conservé
+        """
+        import torchaudio
+        from torch.nn import functional as F
+
+        # CSV
+        tr_csv = os.path.join(datadir, train_file)
+        va_csv = os.path.join(datadir, val_file)
+        te_csv = os.path.join(datadir, test_file)
+        for p in [tr_csv, va_csv, te_csv]:
+            assert os.path.exists(p), f"[load-audioMNIST] CSV introuvable: {p}"
+
+        class AudioMNISTCsvDataset(Dataset):
+            def __init__(self, csv_path, data_root, sample_rate=16000, seconds=1.0, n_mfcc=40):
+                df = pd.read_csv(csv_path)
+
+                # Colonnes minimales
+                for col in ["path", "label", "gender"]:
+                    if col not in df.columns:
+                        raise ValueError(f"[load-audioMNIST] Colonne '{col}' absente dans {csv_path}")
+
+                # Age: on privilégie age_bin si présent, sinon age
+                age_col = "age_bin" if "age_bin" in df.columns else ("age" if "age" in df.columns else None)
+                if age_col is None:
+                    raise ValueError(f"[load-audioMNIST] Aucune colonne 'age_bin' ou 'age' dans {csv_path}")
+
+                # Casts robustes (on conserve la sémantique existante)
+                try:
+                    self.relpaths = df["path"].astype(str).tolist()
+                    self.labels   = df["label"].astype(int).tolist()
+                    self.genders  = df["gender"].astype(int).tolist()  # male=1, female=0 (conservé)
+                    self.ages     = df[age_col].astype(int).tolist()
+                except Exception as e:
+                    raise ValueError(f"[load-audioMNIST] Erreur de typage des colonnes dans {csv_path}: {e}")
+
+                self.root   = data_root
+                self.sr     = int(sample_rate)
+                self.n_samp = int(self.sr * float(seconds))
+                self.n_mfcc = int(n_mfcc)
+
+                # MFCC + paramètres calqués sur le 1er script
+                # n_fft=400, hop=160, win=400, center=False (comme compute_mfcc du script 1)
+                self.mfcc = torchaudio.transforms.MFCC(
+                    sample_rate=self.sr,
+                    n_mfcc=self.n_mfcc,
+                    melkwargs={
+                        "n_fft": 400,
+                        "hop_length": 160,
+                        "win_length": 400,
+                        "center": False,
+                    },
+                )
+
+            def __len__(self):
+                return len(self.labels)
+
+            def _pad_or_crop(self, wav: torch.Tensor) -> torch.Tensor:
+                # wav: [C, T]; on monoïse si nécessaire
+                if wav.dim() == 2 and wav.size(0) > 1:
+                    wav = wav.mean(dim=0, keepdim=True)
+                if wav.dim() == 1:
+                    wav = wav.unsqueeze(0)
+                T = wav.size(1)
+                if T == self.n_samp:
+                    return wav
+                if T > self.n_samp:
+                    start = (T - self.n_samp) // 2
+                    return wav[:, start:start + self.n_samp]
+                pad = self.n_samp - T
+                return F.pad(wav, (0, pad))
+
+            def _cmvn_time(self, mfcc: torch.Tensor) -> torch.Tensor:
+                """
+                mfcc: [1, F, T] -> CMVN par-utterance (z-score sur T), epsilon pour stabilité.
+                """
+                # Moyenne et std sur l'axe temps (-1)
+                mean = mfcc.mean(dim=-1, keepdim=True)
+                std = mfcc.std(dim=-1, keepdim=True)
+                mfcc = (mfcc - mean) / (std.clamp_min(1e-9))
+                return mfcc
+
+            def __getitem__(self, idx):
+                rel = self.relpaths[idx]
+                y   = int(self.labels[idx])
+                g   = int(self.genders[idx])  # male=1, female=0 (conservé)
+                a   = int(self.ages[idx])
+
+                full = os.path.join(self.root, rel)
+                if not os.path.exists(full):
+                    raise FileNotFoundError(f"[load-audioMNIST] WAV introuvable: {full}")
+
+                wav, sr0 = torchaudio.load(full)
+                if sr0 != self.sr:
+                   wav = torchaudio.transforms.Resample(sr0, self.sr)(wav)
+
+                wav = self._pad_or_crop(wav)          # [1, T]
+                mfcc = self.mfcc(wav)                 # [1, F, T] (F = n_mfcc)
+                mfcc = torch.nan_to_num(mfcc)         # robustesse
+                mfcc = self._cmvn_time(mfcc)          # CMVN par-utterance, comme le script 1
+
+                label = torch.tensor(y, dtype=torch.long)
+                sa    = torch.tensor([a, g], dtype=torch.long)  # <-- ordre conservé: [age, gender]
+
+                return mfcc, label, sa
+
+        # Hyperparams audio paramétrables via kwargs si besoin
+        sr      = kwargs.get("audio_sr", 16000)
+        seconds = kwargs.get("audio_seconds", 1.0)
+        n_mfcc  = kwargs.get("audio_n_mfcc", 40)
+
+        trainset = AudioMNISTCsvDataset(tr_csv, datadir, sample_rate=sr, seconds=seconds, n_mfcc=n_mfcc)
+        valset   = AudioMNISTCsvDataset(va_csv, datadir, sample_rate=sr, seconds=seconds, n_mfcc=n_mfcc)
+        testset  = AudioMNISTCsvDataset(te_csv, datadir, sample_rate=sr, seconds=seconds, n_mfcc=n_mfcc)
+        num_cls  = 2  # pair/impair
+
+        return trainset, valset, testset, num_cls
+
+
+    #elif dset_name == "load-audiomnist":
+#        """
+#        Attend :
+#          - datadir/  (racine des fichiers audio, ex: .../AudioMNIST/data)
+#          - CSV de split (train/val/test) passés via train_file, val_file, test_file
+#            Colonnes requises : path, label, gender, et age_bin (ou à défaut age)
+#            - path : chemin RELATIF sous datadir (ex: "01/0_01_0.wav")
+#            - label : 0/1 (pair/impair)
+#            - gender : 0/1 (male=1, female=0)
+#            - age_bin : 0/1 (si présent, prioritaire pour l'attribut sensible "age")
+#        Retourne 3 Dataset torch : (x, y, sa) où sa = [gender, age]
+#        """
+#        import torchaudio
+#        from torch.nn import functional as F
+        # CSV
+#        tr_csv = os.path.join(datadir, train_file)
+#        va_csv = os.path.join(datadir, val_file)
+#        te_csv = os.path.join(datadir, test_file)
+#        for p in [tr_csv, va_csv, te_csv]:
+#            assert os.path.exists(p), f"[load-audioMNIST] CSV introuvable: {p}"
+
+#        class AudioMNISTCsvDataset(Dataset):
+#            def __init__(self, csv_path, data_root, sample_rate=16000, seconds=1.0):
+#                df = pd.read_csv(csv_path)
+
+                # Colonnes minimales
+#                for col in ["path", "label", "gender"]:
+#                    if col not in df.columns:
+#                        raise ValueError(f"[load-audioMNIST] Colonne '{col}' absente dans {csv_path}")
+
+                # Age: on privilégie age_bin si présent, sinon age
+#                age_col = "age_bin" if "age_bin" in df.columns else ("age" if "age" in df.columns else None)
+#                if age_col is None:
+#                    raise ValueError(f"[load-audioMNIST] Aucune colonne 'age_bin' ou 'age' dans {csv_path}")
+
+                # Casts robustes
+#                try:
+#                    self.relpaths = df["path"].astype(str).tolist()
+#                    self.labels   = df["label"].astype(int).tolist()
+#                    self.genders  = df["gender"].astype(int).tolist()
+#                    self.ages     = df[age_col].astype(int).tolist()
+#                except Exception as e:
+#                    raise ValueError(f"[load-audioMNIST] Erreur de typage des colonnes dans {csv_path}: {e}")
+
+#                self.root   = data_root
+#                self.sr     = sample_rate
+#                self.n_samp = int(sample_rate * float(seconds))
+
+                # Même config que CelebVox pour compatibilité (CNN/LSTM existants)
+#                self.spec   = torchaudio.transforms.Spectrogram(n_fft=1022, win_length=512)
+
+#            def __len__(self):
+#                return len(self.labels)
+
+#            def _pad_or_crop(self, wav: torch.Tensor) -> torch.Tensor:
+                # wav: [C, T]; on monoïse si nécessaire
+#                if wav.dim() == 2 and wav.size(0) > 1:
+#                    wav = wav.mean(dim=0, keepdim=True)
+#                if wav.dim() == 1:
+#                    wav = wav.unsqueeze(0)
+#                T = wav.size(1)
+#                if T == self.n_samp:
+#                    return wav
+#                if T > self.n_samp:
+#                    start = (T - self.n_samp) // 2
+#                    return wav[:, start:start + self.n_samp]
+#                pad = self.n_samp - T
+#                return F.pad(wav, (0, pad))
+
+#            def __getitem__(self, idx):
+#                rel = self.relpaths[idx]
+#                y   = int(self.labels[idx])
+#                g   = int(self.genders[idx])
+#                a   = int(self.ages[idx])
+
+#                full = os.path.join(self.root, rel)
+#                if not os.path.exists(full):
+#                    raise FileNotFoundError(f"[load-audioMNIST] WAV introuvable: {full}")
+
+#                wav, sr0 = torchaudio.load(full)
+#                if sr0 != self.sr:
+#                    wav = torchaudio.transforms.Resample(sr0, self.sr)(wav)
+
+#                wav = self._pad_or_crop(wav)
+#                S = self.spec(wav)          # [1, F, T]
+#                S = torch.log(S + 1e-6)     # log-power
+
+#                label = torch.tensor(y, dtype=torch.long)
+#                sa    = torch.tensor([a, g], dtype=torch.long)  # sa[0]=gender, sa[1]=age
+
+#                return S, label, sa
+
+        # Hyperparams audio paramétrables via kwargs si besoin
+#        sr      = kwargs.get("audio_sr", 16000)
+#        seconds = kwargs.get("audio_seconds", 1.0)
+
+#        trainset = AudioMNISTCsvDataset(tr_csv, datadir, sample_rate=sr, seconds=seconds)
+#        valset   = AudioMNISTCsvDataset(va_csv, datadir, sample_rate=sr, seconds=seconds)
+#        testset  = AudioMNISTCsvDataset(te_csv, datadir, sample_rate=sr, seconds=seconds)
+#        num_cls  = 2  # pair/impair
+
+#        return trainset, valset, testset, num_cls
+
 
 
 
@@ -955,7 +1726,7 @@ def save_celeba_images(dataset, folder_name, datadir):
 
     # Save the labels and sensitive attributes information to a CSV file
     labels_csv_path = os.path.join(folder_path, 'labels.csv')
-    np.savetxt(labels_csv_path, labels, delimiter=',', fmt='%s', header="filename,label,sa1,sa2", comments='')
+    np.savetxt(labels_csv_path, labels, delimiter=',', fmt='%s', header="filename,label,age,gender", comments='')
 
 
 def gen_dataset(datadir, dset_name, feature, seed=42, isnumpy=False, **kwargs):
@@ -2749,6 +3520,7 @@ def gen_dataset(datadir, dset_name, feature, seed=42, isnumpy=False, **kwargs):
 
 
         return trainset, valset, testset, num_cls
+    
         
     elif dset_name == "sst2" or dset_name == "sst2_facloc":
         '''
