@@ -1,0 +1,30 @@
+{
+    "dataset_name": "fairface",
+    "sensituve_attributes":["age", "race"],
+    "columns": ["label", "age", "race"], 
+
+    "dataset_path": "./datasets/fairface/",
+    "train_file": "/train_fairface/",
+    "test_file": "/test_fairface/",
+    "val_file": "/valid_fairface/",
+    "data_load": "load-fairface",
+
+    "models": ["ResNet18", "VGG"],
+    
+    "lr": 0.001,
+    "batch_size": 512,
+    "epoch": 200,
+    "label_num": 2,
+    "log_interval": 50,
+    "runs": 5,
+
+    "fraction": [1],
+    "select_every": 20,
+    "ratios": [0.05, 0.1, 0.2, 0.3],
+    "values": [2,3,4,5], 
+    
+
+    "result_path": "./results/fairface-selection",
+    "cols": ["SPD_age", "EOD_age", "AOD_age", "DI_age", "DcI_age", "SPD_race", "EOD_rece", "AOD_race", "DI_race", "DcI_race", "Accuracy", "F1_score", "Precision", "Recall"],
+    "warmup_epochs" : 0
+} 

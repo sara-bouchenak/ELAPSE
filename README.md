@@ -227,13 +227,6 @@ To aggregate the experiment measurements and generate the traces used in the sta
 jupyter notebook code/statistics/traces.ipynb
 ```
 
-This notebook generates:
-
-- `ExperimentMeasurements.csv`
-- `ExperimentStatistics.csv`
-- `ExperimentConfigurations.csv`
-- `DatasetProperties.csv`
-
 ---
 
 ### 4. Run Statistical Tests
