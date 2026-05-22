@@ -42,3 +42,9 @@
 **DC.** The Dutch Census dataset focuses on socio-economic factors to predict occupational prestige. It contains 60,420 records with 12 attributes including gender and age sensitive attributes. As in Adult and KDD, to binarize age we consider active people aged between 15 and 74 years, and the others as inactive.
 
 **Adult.** Extracted from the 1994 US Census database, the Adult dataset contains 48,842 records with gender, race, and age as sensitive attributes. These attributes are binarized using the same methodology applied to KDD’s non-binary sensitive attributes. The primary prediction task for this dataset is to determine whether an individual’s salary exceeds 50𝑘.
+
+
+---
+
+
+All datasets used in this study are publicly available research datasets and were used in accordance with their respective licenses and usage policies.
