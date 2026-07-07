@@ -1,7 +1,9 @@
 import argparse
 import json
 import os
+import random
 import time
+import numpy as np
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
@@ -43,6 +45,14 @@ def parse_args():
         raise FileNotFoundError(f"Config file not found: {args.config}")
 
     return load_config(args.config)
+
+
+def set_run_seed(seed):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
 
 
 def evaluation(data_iter, model, args):
@@ -205,6 +215,10 @@ def main():
             for i in values_final:
                 args.ss = i
                 for x in range(args.runs): 
+                    if not hasattr(args, "seeds") or len(args.seeds) < args.runs:
+                        raise ValueError("Config must define one seed per run")
+                    args.seed = args.seeds[x]
+                    set_run_seed(args.seed)
                     start = time.time()
                 
                     # Datasets
@@ -409,7 +423,6 @@ def main():
                     resample_metric.index.name = "epoch"
                 
                     if args.ss > 0:
-                        #for epoch in range(1, args.epoch+1):
                         for epoch in tqdm(range(1, args.epoch + 1), desc=f"Training {model_name}, run {x}"):
                             subtrn_loss = 0
                             subtrn_correct = 0.0

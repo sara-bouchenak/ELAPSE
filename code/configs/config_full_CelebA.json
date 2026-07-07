@@ -17,6 +17,7 @@
     "label_num": 2,
     "log_interval": 50,
     "runs": 5,
+    "seeds": [17, 42, 58, 116, 246],
 
     "fraction":  [1],
     "select_every": 20,

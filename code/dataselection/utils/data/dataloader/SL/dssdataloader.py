@@ -69,7 +69,6 @@ class DSSDataLoader:
         """
         Function that initializes the subset indices randomly
         """
-        np.random.seed(42)
         # return np.loadtxt('array.txt', dtype=int)
         return np.random.choice(self.len_full, size=self.budget, replace=False)
 

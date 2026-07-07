@@ -41,7 +41,6 @@ class RandomStrategy(object):
             Gradient weight values of selected indices
         """
         if self.online or (self.indices is None):
-            np.random.seed()
             self.indices = np.random.choice(self.N_trn, size=budget, replace=False)
             self.gammas = torch.ones(budget)
         self.indices = [int(x) for x in self.indices]
